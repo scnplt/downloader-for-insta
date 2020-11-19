@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorPrimary"
+    tools:context=".view.SearchResultActivity">
+
+    <com.google.android.gms.ads.AdView
+        xmlns:ads="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/sra_banner_ad"
+        android:layout_width="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_marginBottom="5dp"
+        ads:adSize="SMART_BANNER"
+        ads:adUnitId="@string/adMob_sra_banner_id" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/sra_rvSearchUser"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/sra_banner_ad"
+        android:layout_alignParentEnd="true"
+        android:visibility="visible" />
+
+    <TextView
+        android:id="@+id/sra_txtViewError"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:gravity="center"
+        android:text="@string/sra_error_text"
+        android:textColor="@android:color/darker_gray"
+        android:textSize="@dimen/error_text_size"
+        android:visibility="gone" />
+
+    <TextView
+        android:id="@+id/sra_txtViewUserNotFound"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:gravity="center"
+        android:text="@string/sra_user_not_found_text"
+        android:textColor="@android:color/darker_gray"
+        android:textSize="@dimen/info_text_size"
+        android:visibility="gone" />
+</RelativeLayout>

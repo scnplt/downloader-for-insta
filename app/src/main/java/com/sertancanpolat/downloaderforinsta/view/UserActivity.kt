@@ -1,0 +1,171 @@
+package com.sertancanpolat.downloaderforinsta.view
+
+import android.app.Dialog
+import androidx.appcompat.app.AppCompatActivity
+import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
+import android.view.View
+import android.view.animation.AnimationUtils
+import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.GridLayoutManager
+import com.google.android.gms.ads.AdRequest
+import com.google.android.gms.ads.AdView
+import com.google.android.gms.ads.MobileAds
+import com.sertancanpolat.downloaderforinsta.R
+import com.sertancanpolat.downloaderforinsta.adapter.UserPostsAdapter
+import com.sertancanpolat.downloaderforinsta.utilities.ProcessState
+import com.sertancanpolat.downloaderforinsta.utilities.loadImage
+import com.sertancanpolat.downloaderforinsta.utilities.progressDialogBuilder
+import com.sertancanpolat.downloaderforinsta.viewmodel.UserViewModel
+import com.sertancanpolat.downloaderforinsta.viewmodelFactory.UserViewModelFactory
+import kotlinx.android.synthetic.main.activity_user.*
+import kotlinx.android.synthetic.main.ua_info.*
+
+class UserActivity : AppCompatActivity() {
+    private lateinit var viewModel: UserViewModel
+    private lateinit var progressDialog: Dialog
+    private lateinit var userPostsAdapter: UserPostsAdapter
+    private lateinit var userName: String
+    private lateinit var bannerAdView: AdView
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_user)
+
+        userName = intent.getStringExtra("userName")!!
+        val viewModelFactory = UserViewModelFactory()
+        viewModel = ViewModelProvider(this, viewModelFactory).get(UserViewModel::class.java)
+        observeLiveData()
+        viewModel.getUser(userName)
+
+        toolbar.title = "@$userName"
+        setSupportActionBar(toolbar)
+        supportActionBar!!.setDisplayHomeAsUpEnabled(true)
+
+        progressDialog = progressDialogBuilder(this)
+
+        ua_rvPosts.setOnScrollChangeListener(recyclerViewListener)
+
+        MobileAds.initialize(this) {}
+        bannerAdView = ua_banner_ad
+        val adRequest = AdRequest.Builder().build()
+        bannerAdView.loadAd(adRequest)
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        toolbar.inflateMenu(R.menu.ua_menu)
+        return super.onCreateOptionsMenu(menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.refreshData -> {
+                finish()
+                startActivity(intent)
+            }
+            else -> finish()
+        }
+        return true
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        viewModel.clear()
+        progressDialog.dismiss()
+    }
+
+    private fun observeLiveData() {
+        viewModel.userState.observe(this, { state ->
+            when (state) {
+                ProcessState.IDLE -> {
+                    ua_info_userInfoLayout.visibility = View.GONE
+                    ua_dataLayout.visibility = View.GONE
+                    progressDialog.cancel()
+                }
+                ProcessState.LOADING -> {
+                    ua_info_userInfoLayout.visibility = View.GONE
+                    ua_dataLayout.visibility = View.GONE
+                    progressDialog.show()
+                }
+                ProcessState.ERROR -> {
+                    ua_txtViewError.visibility = View.VISIBLE
+                    ua_dataLayout.visibility = View.GONE
+                    ua_info_userInfoLayout.visibility = View.GONE
+                    progressDialog.cancel()
+                }
+                ProcessState.LOADED -> {
+                    ua_txtViewError.visibility = View.GONE
+
+                    ua_info_userInfoLayout.visibility = View.VISIBLE
+                    val animation = AnimationUtils.loadAnimation(this, R.anim.ua_info_anim).apply { duration = 500 }
+                    ua_info_userInfoLayout.startAnimation(animation)
+
+                    ua_dataLayout.visibility = View.VISIBLE
+                    bindData()
+                    if (viewModel.userModel.value?.graphql?.user?.isPrivate!!) {
+                        ua_rvPosts.visibility = View.GONE
+                        ua_txtViewPrivate.visibility = View.VISIBLE
+                    } else {
+                        ua_txtViewPrivate.visibility = View.GONE
+                        ua_rvPosts.visibility = View.VISIBLE
+                    }
+                    progressDialog.cancel()
+                }
+                else -> {
+                }
+            }
+        })
+
+        viewModel.morePostState.observe(this, { state ->
+            when (state) {
+                ProcessState.LOADING -> progressDialog.show()
+                ProcessState.ERROR -> {
+                    ua_info_userInfoLayout.visibility = View.GONE
+                    ua_dataLayout.visibility = View.GONE
+                    ua_txtViewError.visibility = View.VISIBLE
+                    progressDialog.cancel()
+                }
+                ProcessState.LOADED -> {
+                    userPostsAdapter.notifyItemRangeInserted(
+                        viewModel.lastMediaIndex.value!!,
+                        viewModel.incomingMediaSize.value!!
+                    )
+                    viewModel.lastMediaIndex.value =
+                        viewModel.userModel.value?.graphql?.user?.edgeOwnerToTimelineMedia?.edges?.size
+                    progressDialog.cancel()
+                }
+                else -> {
+                }
+            }
+        })
+    }
+
+    private fun bindData() {
+        val user = viewModel.userModel.value?.graphql?.user!!
+
+        if (!user.isPrivate) {
+            userPostsAdapter = UserPostsAdapter(user)
+            ua_rvPosts.adapter = userPostsAdapter
+            ua_rvPosts.layoutManager = GridLayoutManager(this, 3, GridLayoutManager.VERTICAL, false)
+        }
+
+        ua_info_imgViewUser.loadImage(url = user.profilePicUrlHd, isCircle = true)
+        ua_info_txtViewName.text = user.fullName
+        ua_info_txtViewFollowers.text = user.edgeFollowedBy?.count.toString()
+        ua_info_txtViewFollowing.text = user.edgeFollow?.count.toString()
+        ua_info_txtViewPost.text = user.edgeOwnerToTimelineMedia?.count.toString()
+    }
+
+    private val recyclerViewListener = { _: View, _: Int, _: Int, _: Int, _: Int ->
+        if (ua_rvPosts.computeVerticalScrollOffset() > ua_rvPosts.computeVerticalScrollRange() - 4000
+            && viewModel.morePostState.value != ProcessState.LOADING
+            && viewModel.userModel.value?.graphql?.user?.edgeOwnerToTimelineMedia?.pageInfo?.hasNextPage!!
+        ) {
+            viewModel.getMorePost(
+                viewModel.userModel.value?.graphql?.user?.id!!,
+                viewModel.userModel.value?.graphql?.user?.edgeOwnerToTimelineMedia?.pageInfo?.endCursor
+            )
+        }
+    }
+}

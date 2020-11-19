@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_margin="1dp"
+    android:background="@color/colorPrimaryMid">
+
+    <ImageButton
+        android:id="@+id/ua_item_imgViewPost"
+        android:layout_width="wrap_content"
+        android:layout_gravity="center"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/colorPrimaryMid"
+        android:contentDescription="@string/ua_post_item_img_content"
+        android:src="@android:mipmap/sym_def_app_icon" />
+</FrameLayout>
+
+
+

@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="userModel"
+            type="com.sertancanpolat.downloaderforinsta.model.SUMUserUser" />
+
+        <variable
+            name="clickListener"
+            type="com.sertancanpolat.downloaderforinsta.adapter.SraItemRowClickListener" />
+    </data>
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:onClick="@{(v) -> clickListener.onSraItemRowClicked(v, userModel)}"
+        android:layout_margin="8dp"
+        android:elevation="7dp"
+        app:cardCornerRadius="15dp">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/colorPrimaryDark"
+            android:padding="8dp">
+
+            <ImageView
+                android:id="@+id/sra_item_imgViewUser"
+                android:layout_width="120dp"
+                android:layout_height="120dp"
+                android:contentDescription="@string/sra_item_row_img_content_profile_pic"
+                android:downloadWidth="@{null}"
+                android:downloadHeight="@{null}"
+                android:downloadIsCircle="@{true}"
+                android:downloadUrl="@{userModel.profilePicUrl}"
+                android:scaleType="fitCenter"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"
+                android:gravity="center_vertical"
+                android:orientation="vertical"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/sra_item_linearLayout"
+                app:layout_constraintStart_toEndOf="@+id/sra_item_imgViewUser"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <TextView
+                    android:id="@+id/sra_item_txtViewUserName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:letterSpacing=".04"
+                    android:singleLine="true"
+                    android:text="@{userModel.username}"
+                    android:textColor="@color/colorAccent"
+                    android:textSize="20sp"
+                    tools:layout_editor_absoluteX="145dp"
+                    tools:layout_editor_absoluteY="16dp" />
+
+                <TextView
+                    android:id="@+id/sra_item_txtViewName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:singleLine="true"
+                    android:text="@{userModel.fullName}"
+                    android:textColor="@android:color/darker_gray"
+                    android:textSize="24sp"
+                    tools:layout_editor_absoluteX="145dp"
+                    tools:layout_editor_absoluteY="64dp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/sra_item_linearLayout"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:gravity="center"
+                android:orientation="vertical"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <ImageView
+                    android:id="@+id/sra_item_imgViewVerified"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:contentDescription="@string/sra_item_row_img_content_verified"
+                    android:isVerified="@{userModel.verified}"
+                    android:visibility="gone"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:srcCompat="@drawable/ic_verified" />
+
+                <ImageView
+                    android:id="@+id/sra_item_imgViewPrivate"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:contentDescription="@string/sra_item_row_img_content_lock"
+                    android:isPrivate="@{userModel.private}"
+                    android:visibility="gone"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/imgViewVerified"
+                    app:srcCompat="@drawable/ic_lock" />
+            </LinearLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.cardview.widget.CardView>
+</layout>
+
