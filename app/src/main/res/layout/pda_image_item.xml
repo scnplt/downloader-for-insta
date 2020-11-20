@@ -13,12 +13,8 @@
             type="java.lang.String" />
 
         <variable
-            name="downloadListener"
-            type="com.sertancanpolat.downloaderforinsta.adapter.PDAItemDownloadButton" />
-
-        <variable
-            name="shareListener"
-            type="com.sertancanpolat.downloaderforinsta.adapter.PDAItemShareButton" />
+            name="listener"
+            type="com.sertancanpolat.downloaderforinsta.adapter.PDAItem" />
 
     </data>
 
@@ -55,7 +51,7 @@
                 android:backgroundTint="@color/colorPrimaryDark"
                 android:insetTop="0dp"
                 android:insetBottom="0dp"
-                android:onClick="@{(view) -> downloadListener.downloadButtonClicked(view, url, false)}"
+                android:onClick="@{(view) -> listener.downloadButtonClicked(view, url, false)}"
                 android:paddingVertical="20dp"
                 android:text="@string/pda_item_download"
                 android:textColor="@color/colorAccent"
@@ -70,7 +66,7 @@
                 android:layout_weight="1"
                 android:background="@color/colorPrimaryDark"
                 android:contentDescription="@string/share_button"
-                android:onClick="@{(view) -> shareListener.shareButtonClicked(view, url)}"
+                android:onClick="@{(view) -> listener.shareButtonClicked(view, url)}"
                 android:padding="10dp"
                 android:src="@drawable/ic_share" />
         </LinearLayout>

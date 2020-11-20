@@ -21,13 +21,14 @@ import com.sertancanpolat.downloaderforinsta.view.PostDetailsActivity
 import kotlin.properties.Delegates
 
 class PostDetailsAdapter(val model: PostModel) : RecyclerView.Adapter<RecyclerView.ViewHolder>(),
-    PDAItemDownloadButton, PDAItemShareButton {
+    PDAItem {
     private val typeVideo = 1
     private val typeImg = 0
     lateinit var downloadUrl: String
     var isVideo by Delegates.notNull<Boolean>()
 
-    inner class ImageViewHolder(val view: PdaImageItemBinding) : RecyclerView.ViewHolder(view.root) {
+    inner class ImageViewHolder(val view: PdaImageItemBinding) :
+        RecyclerView.ViewHolder(view.root) {
 
         fun bind(hasChildren: Boolean = false, edge: Edge?) {
             val url: String
@@ -54,20 +55,20 @@ class PostDetailsAdapter(val model: PostModel) : RecyclerView.Adapter<RecyclerVi
             view.pdaItemPostImage.layoutParams.width = width
             view.pdaItemPostImage.layoutParams.height = height
             view.url = url
-            view.downloadListener = this@PostDetailsAdapter
-            view.shareListener = this@PostDetailsAdapter
+            view.listener = this@PostDetailsAdapter
         }
     }
 
-    inner class VideoViewHolder(val view: PdaVideoItemBinding) : RecyclerView.ViewHolder(view.root) {
+    inner class VideoViewHolder(val view: PdaVideoItemBinding) :
+        RecyclerView.ViewHolder(view.root) {
 
         fun bind(hasChildren: Boolean = false, edge: Edge?) {
-            val url = if (hasChildren) edge?.node?.videoUrl!! else model.graphql?.shortcodeMedia?.videoUrl!!
+            val url =
+                if (hasChildren) edge?.node?.videoUrl!! else model.graphql?.shortcodeMedia?.videoUrl!!
 
             view.url = url
             view.edge = edge
-            view.downloadListener = this@PostDetailsAdapter
-            view.shareListener = this@PostDetailsAdapter
+            view.listener = this@PostDetailsAdapter
         }
     }
 
