@@ -9,9 +9,6 @@ import android.view.View
 import android.view.animation.AnimationUtils
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
-import com.google.android.gms.ads.AdRequest
-import com.google.android.gms.ads.AdView
-import com.google.android.gms.ads.MobileAds
 import com.sertancanpolat.downloaderforinsta.R
 import com.sertancanpolat.downloaderforinsta.adapter.UserPostsAdapter
 import com.sertancanpolat.downloaderforinsta.utilities.ProcessState
@@ -27,7 +24,6 @@ class UserActivity : AppCompatActivity() {
     private lateinit var progressDialog: Dialog
     private lateinit var userPostsAdapter: UserPostsAdapter
     private lateinit var userName: String
-    private lateinit var bannerAdView: AdView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -46,11 +42,6 @@ class UserActivity : AppCompatActivity() {
         progressDialog = progressDialogBuilder(this)
 
         ua_rvPosts.setOnScrollChangeListener(recyclerViewListener)
-
-        MobileAds.initialize(this) {}
-        bannerAdView = ua_banner_ad
-        val adRequest = AdRequest.Builder().build()
-        bannerAdView.loadAd(adRequest)
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -96,11 +87,7 @@ class UserActivity : AppCompatActivity() {
                 }
                 ProcessState.LOADED -> {
                     ua_txtViewError.visibility = View.GONE
-
                     ua_info_userInfoLayout.visibility = View.VISIBLE
-                    val animation = AnimationUtils.loadAnimation(this, R.anim.ua_info_anim).apply { duration = 500 }
-                    ua_info_userInfoLayout.startAnimation(animation)
-
                     ua_dataLayout.visibility = View.VISIBLE
                     bindData()
                     if (viewModel.userModel.value?.graphql?.user?.isPrivate!!) {

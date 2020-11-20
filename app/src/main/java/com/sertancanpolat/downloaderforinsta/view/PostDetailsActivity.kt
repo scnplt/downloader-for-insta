@@ -27,7 +27,7 @@ class PostDetailsActivity : AppCompatActivity() {
         setContentView(R.layout.activity_post_details)
 
         shortCode = if (intent.action == Intent.ACTION_SEND) {
-            var url = intent.getStringExtra(Intent.EXTRA_TEXT).toString()
+            var url = intent.getStringExtra(Intent.EXTRA_TEXT)!!.toString()
             url = url.subSequence(url.indexOf("http"), url.lastIndex).toString()
             getShortCodeFromUrl(url)
         } else intent.getStringExtra("shortCode")!!

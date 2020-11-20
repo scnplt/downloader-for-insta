@@ -57,9 +57,6 @@ lint/outputs/
 lint/tmp/
 *.hprof
 
-app/src/main/res/values/strings.xml
-app/src/main/res/values/styles.xml
-
 ### Android Patch ###
 gen-external-apklibs
 output.json

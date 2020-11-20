@@ -1,0 +1,41 @@
+<resources>
+    <string name="app_name">Downloader For Insta</string>
+
+    <!-- Main Activity -->
+    <string name="ma_edit_text">Username | Name | Post url</string>
+
+    <!-- Search Result Activity -->
+    <string name="sra_label" />
+    <string name="sra_user_not_found_text">User not found!</string>
+    <!-- Search Result Activity Item Row-->
+    <string name="sra_item_row_img_content_profile_pic">Profile photo</string>
+    <string name="sra_item_row_img_content_verified">Is verified?</string>
+    <string name="sra_item_row_img_content_lock">Is private?</string>
+    <string name="sra_item_row_txt_username">\@username</string>
+    <string name="sra_item_row_txt_name">Lorem</string>
+    <string name="sra_error_text">Error! Please try again or check your internet connection.</string>
+
+    <!-- User Activity -->
+    <string name="ua_label" />
+    <string name="ua_menu_txt_refresh">Refresh</string>
+    <string name="ua_info_txt_followers">Followers</string>
+    <string name="ua_info_txt_following">Following</string>
+    <string name="ua_info_txt_posts">Posts</string>
+    <string name="ua_txt_private">This account is private.</string>
+    <string name="ua_post_item_img_content">Post</string>
+    <string name="ua_error_text">Error! Please try again.\n\n• Check your internet connection.\n• This user  may have age or region limitation.</string>
+
+    <!-- Post Activity -->
+    <string name="pa_label">Post</string>
+    <string name="pda_image_item_content_image">Image</string>
+    <string name="pda_item_download">Download</string>
+    <string name="pda_error_text">Error! Please try again or check your internet connection. If you came with a post url, please check the url.</string>
+
+    <!-- Custom Alert Dialog - Download -->
+    <string name="cad_title">Download Manager</string>
+    <string name="cad_content">Are you sure you want to download this post?</string>
+    <string name="cad_button_positive">Yes</string>
+    <string name="cad_button_negative">No</string>
+
+    <string name="share_button">Share button.</string>
+</resources>

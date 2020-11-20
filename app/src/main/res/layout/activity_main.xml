@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:focusable="true"
-    android:focusableInTouchMode="true"
     android:layout_height="match_parent"
     android:background="@color/colorPrimary"
+    android:focusable="true"
+    android:focusableInTouchMode="true"
     tools:context=".view.MainActivity">
 
     <EditText
         android:id="@+id/ma_edTxtUserName"
-        android:layout_width="0dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_gravity="top"
         android:layout_marginHorizontal="16dp"
         android:layout_marginTop="32dp"
         android:autofillHints=""
@@ -30,20 +30,6 @@
         android:singleLine="true"
         android:textColor="@android:color/white"
         android:textColorHint="@android:color/darker_gray"
-        android:textSize="20sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:textSize="20sp" />
 
-    <com.google.android.gms.ads.AdView
-        android:id="@+id/ma_banner_ad"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:adSize="MEDIUM_RECTANGLE"
-        app:adUnitId="@string/adMob_ma_banner_id"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ma_edTxtUserName"/>
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+</FrameLayout>

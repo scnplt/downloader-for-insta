@@ -47,23 +47,13 @@
             android:layout_height="wrap_content"
             app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-            <com.google.android.gms.ads.AdView xmlns:ads="http://schemas.android.com/apk/res-auto"
-                android:id="@+id/ua_banner_ad"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentTop="true"
-                android:layout_centerHorizontal="true"
-                android:layout_marginBottom="5dp"
-                ads:adSize="SMART_BANNER"
-                ads:adUnitId="@string/adMob_ua_banner_id" />
-
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/ua_rvPosts"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/ua_banner_ad"
                 android:layout_alignParentStart="true"
                 android:layout_alignParentEnd="true"
+                android:layout_alignParentTop="true"
                 android:scrollbarSize="3dp"
                 android:scrollbarThumbVertical="@color/colorAccent"
                 android:scrollbars="vertical"
@@ -73,8 +63,8 @@
                 android:id="@+id/ua_txtViewPrivate"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/ua_banner_ad"
                 android:layout_centerHorizontal="true"
+                android:layout_centerInParent="true"
                 android:layout_marginTop="20dp"
                 android:gravity="center"
                 android:text="@string/ua_txt_private"

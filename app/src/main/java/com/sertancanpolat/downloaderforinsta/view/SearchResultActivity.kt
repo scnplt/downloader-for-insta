@@ -7,9 +7,6 @@ import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.google.android.gms.ads.AdRequest
-import com.google.android.gms.ads.AdView
-import com.google.android.gms.ads.MobileAds
 import com.sertancanpolat.downloaderforinsta.R
 import com.sertancanpolat.downloaderforinsta.adapter.SearchResultAdapter
 import com.sertancanpolat.downloaderforinsta.utilities.ProcessState
@@ -21,7 +18,6 @@ import kotlinx.android.synthetic.main.activity_search_result.*
 class SearchResultActivity : AppCompatActivity() {
     private lateinit var viewModel: SearchResultViewModel
     private lateinit var progressDialog: Dialog
-    private lateinit var bannerAdView : AdView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -35,11 +31,6 @@ class SearchResultActivity : AppCompatActivity() {
         viewModel.searchUser(userName)
 
         progressDialog = progressDialogBuilder(this)
-
-        MobileAds.initialize(this) {}
-        bannerAdView = sra_banner_ad
-        val adRequest = AdRequest.Builder().build()
-        bannerAdView.loadAd(adRequest)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

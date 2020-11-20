@@ -10,14 +10,14 @@
             type="com.sertancanpolat.downloaderforinsta.model.SUMUserUser" />
 
         <variable
-            name="clickListener"
-            type="com.sertancanpolat.downloaderforinsta.adapter.SraItemRowClickListener" />
+            name="adapter"
+            type="com.sertancanpolat.downloaderforinsta.adapter.SearchResultAdapter" />
     </data>
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:onClick="@{(v) -> clickListener.onSraItemRowClicked(v, userModel)}"
+        android:onClick="@{(view) -> adapter.onSraItemRowClicked(view, userModel)}"
         android:layout_margin="8dp"
         android:elevation="7dp"
         app:cardCornerRadius="15dp">

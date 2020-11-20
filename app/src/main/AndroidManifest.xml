@@ -16,10 +16,6 @@
         android:usesCleartextTraffic="true"
         tools:ignore="AllowBackup">
 
-        <meta-data
-            android:name="com.google.android.gms.ads.APPLICATION_ID"
-            android:value="@string/adMob_app_id" />
-
         <activity
             android:name=".view.MainActivity"
             android:screenOrientation="portrait"
