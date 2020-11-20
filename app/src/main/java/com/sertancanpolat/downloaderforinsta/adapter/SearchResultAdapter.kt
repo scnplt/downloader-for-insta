@@ -13,7 +13,7 @@ import com.sertancanpolat.downloaderforinsta.model.SearchedUserModel
 import com.sertancanpolat.downloaderforinsta.view.UserActivity
 
 class SearchResultAdapter(private val result: SearchedUserModel) :
-    RecyclerView.Adapter<SearchResultAdapter.SearchResultActivityViewHolder>() {
+    RecyclerView.Adapter<SearchResultAdapter.SearchResultActivityViewHolder>(), SRAItem {
 
     class SearchResultActivityViewHolder(var view: SraItemRowBinding) : RecyclerView.ViewHolder(view.root)
 
@@ -27,10 +27,10 @@ class SearchResultAdapter(private val result: SearchedUserModel) :
 
     override fun onBindViewHolder(holder: SearchResultActivityViewHolder, position: Int) {
         holder.view.userModel = result.users!![position].user
-        holder.view.adapter = this
+        holder.view.listener = this
     }
 
-    fun onSraItemRowClicked(v: View, user: SearchedUserModel.UserWithPosition.User){
+    override fun onClicked(v: View, user: SearchedUserModel.UserWithPosition.User) {
         val intent = Intent(v.context, UserActivity::class.java)
         intent.putExtra("userName", user.username)
         startActivity(v.context, intent, null)

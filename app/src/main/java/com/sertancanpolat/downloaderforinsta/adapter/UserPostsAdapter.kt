@@ -15,13 +15,15 @@ import com.sertancanpolat.downloaderforinsta.utilities.loadImage
 import com.sertancanpolat.downloaderforinsta.view.PostDetailsActivity
 
 class UserPostsAdapter(val model: UserModel.Graphql.User?) :
-    RecyclerView.Adapter<UserPostsAdapter.UserPostViewHolder>() {
+    RecyclerView.Adapter<UserPostsAdapter.UserPostViewHolder>(),
+    UAPostItem {
 
-    inner class UserPostViewHolder(var view: UaPostItemBinding) : RecyclerView.ViewHolder(view.root) {
+    inner class UserPostViewHolder(var view: UaPostItemBinding) :
+        RecyclerView.ViewHolder(view.root) {
 
         fun bind(edge: Edge?) {
             view.edge = edge
-            view.adapter = this@UserPostsAdapter
+            view.listener = this@UserPostsAdapter
 
             val width = view.root.resources.displayMetrics.widthPixels / 3 - 3
             view.root.layoutParams.width = width
@@ -34,15 +36,14 @@ class UserPostsAdapter(val model: UserModel.Graphql.User?) :
         }
     }
 
-    fun itemClicked(view: View, shortCode: String){
-        val intent = Intent(view.context, PostDetailsActivity::class.java)
-        intent.putExtra("shortCode", shortCode)
-        startActivity(view.context, intent, null)
-    }
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): UserPostViewHolder {
         val inflater = LayoutInflater.from(parent.context)
-        val view = DataBindingUtil.inflate<UaPostItemBinding>(inflater, R.layout.ua_post_item, parent, false)
+        val view = DataBindingUtil.inflate<UaPostItemBinding>(
+            inflater,
+            R.layout.ua_post_item,
+            parent,
+            false
+        )
         return UserPostViewHolder(view)
     }
 
@@ -50,4 +51,10 @@ class UserPostsAdapter(val model: UserModel.Graphql.User?) :
 
     override fun onBindViewHolder(holder: UserPostViewHolder, position: Int) =
         holder.bind(model?.edgeOwnerToTimelineMedia?.edges?.get(position))
+
+    override fun onClicked(v: View, shortCode: String) {
+        val intent = Intent(v.context, PostDetailsActivity::class.java)
+        intent.putExtra("shortCode", shortCode)
+        startActivity(v.context, intent, null)
+    }
 }

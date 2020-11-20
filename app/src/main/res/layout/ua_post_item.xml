@@ -8,8 +8,9 @@
             type="com.sertancanpolat.downloaderforinsta.model.helper_class.Edge" />
 
         <variable
-            name="adapter"
-            type="com.sertancanpolat.downloaderforinsta.adapter.UserPostsAdapter" />
+            name="listener"
+            type="com.sertancanpolat.downloaderforinsta.adapter.UAPostItem" />
+
     </data>
 
     <FrameLayout
@@ -25,7 +26,7 @@
             android:layout_gravity="center"
             android:backgroundTint="@color/colorPrimaryMid"
             android:contentDescription="@string/ua_post_item_img_content"
-            android:onClick="@{(view) -> adapter.itemClicked(view, edge.node.shortcode)}"
+            android:onClick="@{(view) -> listener.onClicked(view, edge.node.shortcode)}"
             android:src="@android:mipmap/sym_def_app_icon" />
     </FrameLayout>
 </layout>
