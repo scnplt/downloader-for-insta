@@ -65,7 +65,7 @@
                 android:layout_marginStart="1dp"
                 android:layout_weight="1"
                 android:background="@color/colorPrimaryDark"
-                android:contentDescription="@string/share_button"
+                android:contentDescription="@string/share_button_content"
                 android:onClick="@{(view) -> listener.shareButtonClicked(view, url)}"
                 android:padding="10dp"
                 android:src="@drawable/ic_share" />

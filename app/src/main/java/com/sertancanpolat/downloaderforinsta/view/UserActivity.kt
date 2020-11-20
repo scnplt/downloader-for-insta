@@ -13,7 +13,7 @@ import com.sertancanpolat.downloaderforinsta.R
 import com.sertancanpolat.downloaderforinsta.adapter.UserPostsAdapter
 import com.sertancanpolat.downloaderforinsta.databinding.ActivityUserBinding
 import com.sertancanpolat.downloaderforinsta.utilities.ProcessState
-import com.sertancanpolat.downloaderforinsta.utilities.progressDialogBuilder
+import com.sertancanpolat.downloaderforinsta.utilities.progressDialog
 import com.sertancanpolat.downloaderforinsta.viewmodel.UserViewModel
 import com.sertancanpolat.downloaderforinsta.viewmodelFactory.UserViewModelFactory
 import kotlinx.android.synthetic.main.activity_user.*
@@ -39,7 +39,7 @@ class UserActivity : AppCompatActivity() {
         setSupportActionBar(toolbar)
         supportActionBar!!.setDisplayHomeAsUpEnabled(true)
 
-        progressDialog = progressDialogBuilder(this)
+        progressDialog = this.progressDialog()
 
         ua_rvPosts.setOnScrollChangeListener(recyclerViewListener)
     }
@@ -50,13 +50,8 @@ class UserActivity : AppCompatActivity() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when (item.itemId) {
-            R.id.refreshData -> {
-                finish()
-                startActivity(intent)
-            }
-            else -> finish()
-        }
+        if(item.itemId == R.id.refreshData) startActivity(intent)
+        finish()
         return true
     }
 
@@ -99,8 +94,7 @@ class UserActivity : AppCompatActivity() {
                     }
                     progressDialog.cancel()
                 }
-                else -> {
-                }
+                else -> { }
             }
         })
 

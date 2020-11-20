@@ -36,7 +36,7 @@ class PostDetailsActivity : AppCompatActivity() {
         viewModel = ViewModelProvider(this, viewModelFactory).get(PostDetailsViewModel::class.java)
 
         observeLiveData()
-        progressDialog = progressDialogBuilder(this)
+        progressDialog = this.progressDialog()
 
         viewModel.getPost(shortCode)
     }
@@ -81,16 +81,12 @@ class PostDetailsActivity : AppCompatActivity() {
         })
     }
 
-    override fun onRequestPermissionsResult(
-        requestCode: Int,
-        permissions: Array<out String>,
-        grantResults: IntArray
-    ) {
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         if (requestCode == 1 && grantResults.isNotEmpty()) {
             if (grantResults[0] == PackageManager.PERMISSION_GRANTED)
                 downloadFile(this, postAdapter.downloadUrl, postAdapter.isVideo)
-            else snackbarBuilder(this, "Please enable storage access permission.", 18f)
+            else this.snackBar("Please enable storage access permission.", 18f)
         }
     }
 }

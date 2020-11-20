@@ -6,6 +6,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 object RetrofitBuilder {
     private const val BASE_URL = "https://www.instagram.com/"
+
     private val retrofit: Retrofit.Builder by lazy {
         Retrofit.Builder()
             .baseUrl(BASE_URL)

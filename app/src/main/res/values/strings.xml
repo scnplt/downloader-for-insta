@@ -11,8 +11,6 @@
     <string name="sra_item_row_img_content_profile_pic">Profile photo</string>
     <string name="sra_item_row_img_content_verified">Is verified?</string>
     <string name="sra_item_row_img_content_lock">Is private?</string>
-    <string name="sra_item_row_txt_username">\@username</string>
-    <string name="sra_item_row_txt_name">Lorem</string>
     <string name="sra_error_text">Error! Please try again or check your internet connection.</string>
 
     <!-- User Activity -->
@@ -23,7 +21,7 @@
     <string name="ua_info_txt_posts">Posts</string>
     <string name="ua_txt_private">This account is private.</string>
     <string name="ua_post_item_img_content">Post</string>
-    <string name="ua_error_text">Error! Please try again.\n\n• Check your internet connection.\n• This user  may have age or region limitation.</string>
+    <string name="ua_error_text">Error! Please try again or check your internet connection. This user  may have age or region limitation.</string>
 
     <!-- Post Activity -->
     <string name="pa_label">Post</string>
@@ -37,5 +35,5 @@
     <string name="cad_button_positive">Yes</string>
     <string name="cad_button_negative">No</string>
 
-    <string name="share_button">Share button.</string>
+    <string name="share_button_content">Share button.</string>
 </resources>

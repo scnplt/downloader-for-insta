@@ -15,7 +15,13 @@ import com.sertancanpolat.downloaderforinsta.view.UserActivity
 class SearchResultAdapter(private val result: SearchedUserModel) :
     RecyclerView.Adapter<SearchResultAdapter.SearchResultActivityViewHolder>(), SRAItem {
 
-    class SearchResultActivityViewHolder(var view: SraItemRowBinding) : RecyclerView.ViewHolder(view.root)
+    inner class SearchResultActivityViewHolder(var view: SraItemRowBinding) : RecyclerView.ViewHolder(view.root) {
+
+        fun bind(user: SearchedUserModel.UserWithPosition.User?){
+            view.listener = this@SearchResultAdapter
+            view.userModel = user
+        }
+    }
 
     override fun getItemCount(): Int = result.users?.size ?: 0
 
@@ -26,8 +32,7 @@ class SearchResultAdapter(private val result: SearchedUserModel) :
     }
 
     override fun onBindViewHolder(holder: SearchResultActivityViewHolder, position: Int) {
-        holder.view.userModel = result.users!![position].user
-        holder.view.listener = this
+        holder.bind(result.users!![position].user)
     }
 
     override fun onClicked(v: View, user: SearchedUserModel.UserWithPosition.User) {

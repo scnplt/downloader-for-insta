@@ -7,7 +7,7 @@ import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
 import com.sertancanpolat.downloaderforinsta.R
 import com.sertancanpolat.downloaderforinsta.utilities.getShortCodeFromUrl
-import com.sertancanpolat.downloaderforinsta.utilities.snackbarBuilder
+import com.sertancanpolat.downloaderforinsta.utilities.snackBar
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
@@ -30,7 +30,7 @@ class MainActivity : AppCompatActivity() {
                 }
 
                 startActivity(intent)
-            } else snackbarBuilder(this, "Please enter the username, name or post url!")
+            } else this.snackBar("Please enter the username, name or post url!")
 
             service.hideSoftInputFromWindow(currentFocus?.windowToken, 0)
         }

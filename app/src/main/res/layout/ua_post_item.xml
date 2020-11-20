@@ -11,6 +11,10 @@
             name="listener"
             type="com.sertancanpolat.downloaderforinsta.adapter.UAPostItem" />
 
+        <variable
+            name="width"
+            type="java.lang.Integer" />
+
     </data>
 
     <FrameLayout
@@ -26,6 +30,9 @@
             android:layout_gravity="center"
             android:backgroundTint="@color/colorPrimaryMid"
             android:contentDescription="@string/ua_post_item_img_content"
+            android:downloadWidth="@{width}"
+            android:downloadIsCircle="@{false}"
+            android:downloadUrl="@{edge.node.displayUrl}"
             android:onClick="@{(view) -> listener.onClicked(view, edge.node.shortcode)}"
             android:src="@android:mipmap/sym_def_app_icon" />
     </FrameLayout>

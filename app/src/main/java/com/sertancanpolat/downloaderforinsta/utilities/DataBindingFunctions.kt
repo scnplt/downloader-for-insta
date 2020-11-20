@@ -14,6 +14,10 @@ import com.sertancanpolat.downloaderforinsta.R
 @BindingAdapter("android:downloadUrl", "android:downloadIsCircle")
 fun downloadImage(view: ImageView, url: String?, isCircle: Boolean) = view.loadImage(url, isCircle = isCircle)
 
+@BindingAdapter("android:downloadUrl", "android:downloadIsCircle", "android:downloadWidth")
+fun downloadImageWithWidth(view: ImageView, url: String?, isCircle: Boolean, width: Int){
+    view.loadImage(url, width, width, isCircle)
+}
 
 @BindingAdapter("android:isPrivate")
 fun isPrivate(view: ImageView, isPrivate: Boolean){

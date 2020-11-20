@@ -10,7 +10,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.sertancanpolat.downloaderforinsta.R
 import com.sertancanpolat.downloaderforinsta.adapter.SearchResultAdapter
 import com.sertancanpolat.downloaderforinsta.utilities.ProcessState
-import com.sertancanpolat.downloaderforinsta.utilities.progressDialogBuilder
+import com.sertancanpolat.downloaderforinsta.utilities.progressDialog
 import com.sertancanpolat.downloaderforinsta.viewmodel.SearchResultViewModel
 import com.sertancanpolat.downloaderforinsta.viewmodelFactory.SearchResultViewModelFactory
 import kotlinx.android.synthetic.main.activity_search_result.*
@@ -30,7 +30,7 @@ class SearchResultActivity : AppCompatActivity() {
         observeLiveData()
         viewModel.searchUser(userName)
 
-        progressDialog = progressDialogBuilder(this)
+        progressDialog = this.progressDialog()
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
