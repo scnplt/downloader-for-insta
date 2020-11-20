@@ -1,63 +1,83 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_marginBottom="20dp"
-    android:background="@color/colorPrimaryMid">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <FrameLayout
-        android:id="@+id/pda_item_postVideoLayout"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:minHeight="175dp"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true">
+    <data>
 
-        <com.google.android.exoplayer2.ui.PlayerView
-            android:id="@+id/pda_item_postVideo"
-            android:layout_width="match_parent"
-            app:resize_mode="fixed_width"
-            android:layout_gravity="bottom|center"
-            android:layout_height="wrap_content"
-            app:shutter_background_color="@color/colorPrimaryMid"
-            app:unplayed_color="@color/colorPrimaryMid"
-            app:played_color="@color/colorAccent"
-            app:scrubber_color="@color/colorAccent"
-            app:buffered_color="@color/colorDarkerGray"/>
-    </FrameLayout>
+        <variable
+            name="edge"
+            type="com.sertancanpolat.downloaderforinsta.model.helper_class.Edge" />
 
-    <LinearLayout
+        <variable
+            name="adapter"
+            type="com.sertancanpolat.downloaderforinsta.adapter.PostDetailsAdapter" />
+
+        <variable
+            name="url"
+            type="java.lang.String" />
+    </data>
+
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/pda_item_postVideoLayout"
-        android:gravity="center"
-        android:orientation="horizontal">
+        android:layout_marginBottom="20dp"
+        android:background="@color/colorPrimaryMid">
 
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/pda_item_downloadPostVideo"
-            android:layout_width="0dp"
-            android:layout_height="70dp"
-            android:layout_weight="5"
-            android:backgroundTint="@color/colorPrimaryDark"
-            android:insetTop="0dp"
-            android:insetBottom="0dp"
-            android:paddingVertical="20dp"
-            android:text="@string/pda_item_download"
-            android:textColor="@color/colorAccent"
-            android:textSize="20sp"
-            app:cornerRadius="0dp" />
+        <FrameLayout
+            android:id="@+id/pda_item_postVideoLayout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:minHeight="175dp">
 
-        <ImageButton
-            android:id="@+id/pda_item_share_buttonVideo"
-            android:layout_width="0dp"
-            android:layout_height="70dp"
-            android:layout_marginStart="1dp"
-            android:layout_weight="1"
-            android:background="@color/colorPrimaryDark"
-            android:padding="10dp"
-            android:src="@drawable/ic_share"
-            android:contentDescription="@string/share_button" />
-    </LinearLayout>
-</RelativeLayout>
+            <com.google.android.exoplayer2.ui.PlayerView
+                android:id="@+id/pda_item_postVideo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom|center"
+                app:buffered_color="@color/colorDarkerGray"
+                app:played_color="@color/colorAccent"
+                app:resize_mode="fixed_width"
+                app:scrubber_color="@color/colorAccent"
+                app:shutter_background_color="@color/colorPrimaryMid"
+                app:unplayed_color="@color/colorPrimaryMid" />
+        </FrameLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/pda_item_postVideoLayout"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/pda_item_downloadPostVideo"
+                android:layout_width="0dp"
+                android:layout_height="70dp"
+                android:layout_weight="5"
+                android:backgroundTint="@color/colorPrimaryDark"
+                android:insetTop="0dp"
+                android:insetBottom="0dp"
+                android:onClick="@{(view) -> adapter.downloadButtonClicked(view, url, true)}"
+                android:paddingVertical="20dp"
+                android:text="@string/pda_item_download"
+                android:textColor="@color/colorAccent"
+                android:textSize="20sp"
+                app:cornerRadius="0dp" />
+
+            <ImageButton
+                android:id="@+id/pda_item_share_buttonVideo"
+                android:layout_width="0dp"
+                android:layout_height="70dp"
+                android:layout_marginStart="1dp"
+                android:layout_weight="1"
+                android:background="@color/colorPrimaryDark"
+                android:contentDescription="@string/share_button"
+                android:onClick="@{(view) -> adapter.shareButtonClicked(view, url)}"
+                android:padding="10dp"
+                android:src="@drawable/ic_share" />
+        </LinearLayout>
+    </RelativeLayout>
+</layout>

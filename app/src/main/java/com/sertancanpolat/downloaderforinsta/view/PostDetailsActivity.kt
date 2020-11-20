@@ -89,7 +89,7 @@ class PostDetailsActivity : AppCompatActivity() {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         if (requestCode == 1 && grantResults.isNotEmpty()) {
             if (grantResults[0] == PackageManager.PERMISSION_GRANTED)
-                downloadFile(this, postAdapter.downloadUrl, postAdapter.postIsVideo)
+                downloadFile(this, postAdapter.downloadUrl, postAdapter.isVideo)
             else snackbarBuilder(this, "Please enable storage access permission.", 18f)
         }
     }

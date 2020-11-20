@@ -1,56 +1,81 @@
 <?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
+    <data>
 
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_marginBottom="20dp"
-    android:background="@color/colorPrimaryMid">
+        <variable
+            name="edge"
+            type="com.sertancanpolat.downloaderforinsta.model.helper_class.Edge" />
 
-    <ImageView
-        android:id="@+id/pda_item_postImage"
-        android:layout_width="match_parent"
-        android:layout_height="200dp"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true"
-        android:contentDescription="@string/pda_image_item_content_image"
-        android:src="@mipmap/ic_launcher_round" />
+        <variable
+            name="adapter"
+            type="com.sertancanpolat.downloaderforinsta.adapter.PostDetailsAdapter" />
 
-    <LinearLayout
+        <variable
+            name="url"
+            type="java.lang.String" />
+
+    </data>
+
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/pda_item_postImage"
-        android:gravity="center"
-        android:orientation="horizontal">
+        android:layout_marginBottom="20dp"
+        android:background="@color/colorPrimaryMid">
 
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/pda_item_downloadPostImage"
-            android:layout_width="0dp"
-            android:layout_height="70dp"
-            android:layout_weight="5"
-            android:backgroundTint="@color/colorPrimaryDark"
-            android:insetTop="0dp"
-            android:insetBottom="0dp"
-            android:paddingVertical="20dp"
-            android:text="@string/pda_item_download"
-            android:textColor="@color/colorAccent"
-            android:textSize="20sp"
-            app:cornerRadius="0dp" />
+        <ImageView
+            android:id="@+id/pda_item_postImage"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:contentDescription="@string/pda_image_item_content_image"
+            android:downloadWidth="@{null}"
+            android:downloadHeight="@{null}"
+            android:downloadIsCircle="@{false}"
+            android:downloadUrl="@{url}"
+            android:src="@mipmap/ic_launcher_round" />
 
-        <ImageButton
-            android:id="@+id/pda_item_share_buttonImage"
-            android:layout_width="0dp"
-            android:layout_height="70dp"
-            android:layout_marginStart="1dp"
-            android:layout_weight="1"
-            android:background="@color/colorPrimaryDark"
-            android:contentDescription="@string/share_button"
-            android:padding="10dp"
-            android:src="@drawable/ic_share" />
-    </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/pda_item_postImage"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/pda_item_downloadPostImage"
+                android:layout_width="0dp"
+                android:layout_height="70dp"
+                android:layout_weight="5"
+                android:backgroundTint="@color/colorPrimaryDark"
+                android:insetTop="0dp"
+                android:insetBottom="0dp"
+                android:onClick="@{(view) -> adapter.downloadButtonClicked(view, edge.node.displayUrl, false)}"
+                android:paddingVertical="20dp"
+                android:text="@string/pda_item_download"
+                android:textColor="@color/colorAccent"
+                android:textSize="20sp"
+                app:cornerRadius="0dp" />
+
+            <ImageButton
+                android:id="@+id/pda_item_share_buttonImage"
+                android:layout_width="0dp"
+                android:layout_height="70dp"
+                android:layout_marginStart="1dp"
+                android:layout_weight="1"
+                android:background="@color/colorPrimaryDark"
+                android:contentDescription="@string/share_button"
+                android:onClick="@{(view) -> adapter.shareButtonClicked(view, edge.node.displayUrl)}"
+                android:padding="10dp"
+                android:src="@drawable/ic_share" />
+        </LinearLayout>
 
 
-</RelativeLayout>
+    </RelativeLayout>
+</layout>
+
+
 

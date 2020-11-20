@@ -9,30 +9,34 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.core.content.ContextCompat.startActivity
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.google.android.exoplayer2.*
+import com.google.android.exoplayer2.SimpleExoPlayer
 import com.google.android.exoplayer2.source.ProgressiveMediaSource
 import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory
 import com.google.android.exoplayer2.util.Util
 import com.sertancanpolat.downloaderforinsta.R
+import com.sertancanpolat.downloaderforinsta.databinding.PdaImageItemBinding
+import com.sertancanpolat.downloaderforinsta.databinding.PdaVideoItemBinding
 import com.sertancanpolat.downloaderforinsta.model.PostModel
 import com.sertancanpolat.downloaderforinsta.model.helper_class.Edge
 import com.sertancanpolat.downloaderforinsta.utilities.downloadFile
 import com.sertancanpolat.downloaderforinsta.view.PostDetailsActivity
-import kotlinx.android.synthetic.main.pda_image_item.view.*
-import kotlinx.android.synthetic.main.pda_video_item.view.*
 import kotlin.properties.Delegates
 
 class PostDetailsAdapter(val model: PostModel) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     private val typeVideo = 1
     private val typeImg = 0
     lateinit var downloadUrl: String
-    var postIsVideo by Delegates.notNull<Boolean>()
+    var isVideo by Delegates.notNull<Boolean>()
 
-    inner class ImageViewHolder(val view: View) : RecyclerView.ViewHolder(view) {
+    inner class ImageViewHolder(val view: PdaImageItemBinding) : RecyclerView.ViewHolder(view.root) {
 
         fun bind(hasChildren: Boolean = false, edge: Edge?) {
+            view.adapter = this@PostDetailsAdapter
+            view.edge = edge
+
             val url: String
             val ratio: Double
             val width: Int
@@ -40,36 +44,27 @@ class PostDetailsAdapter(val model: PostModel) : RecyclerView.Adapter<RecyclerVi
 
             if (hasChildren) {
                 url = edge?.node?.displayUrl!!
-                ratio = view.resources.displayMetrics.widthPixels / edge.node?.dimensions?.width!!.toDouble()
+                ratio = view.root.resources.displayMetrics.widthPixels / edge.node?.dimensions?.width!!.toDouble()
                 width = (edge.node?.dimensions?.width!! * ratio).toInt()
                 height = (edge.node?.dimensions?.height!! * ratio).toInt()
 
             } else {
                 url = model.graphql?.shortcodeMedia?.displayUrl!!
-                ratio = view.resources.displayMetrics.widthPixels / model.graphql?.shortcodeMedia?.dimensions?.width!!.toDouble()
+                ratio = view.root.resources.displayMetrics.widthPixels / model.graphql?.shortcodeMedia?.dimensions?.width!!.toDouble()
                 width = (model.graphql?.shortcodeMedia?.dimensions?.width!! * ratio).toInt()
                 height = (model.graphql?.shortcodeMedia?.dimensions?.height!! * ratio).toInt()
             }
 
-
-            view.pda_item_postImage.layoutParams.width = width
-            view.pda_item_postImage.layoutParams.height = height
-
-
-            view.pda_item_downloadPostImage.setOnClickListener {
-                downloadUrl = url
-                postIsVideo = false
-                downloadPost(view.pda_item_postImage.context)
-            }
-
-
+            view.pdaItemPostImage.layoutParams.width = width
+            view.pdaItemPostImage.layoutParams.height = height
+            view.url = url
         }
     }
 
-    inner class VideoViewHolder(val view: View) : RecyclerView.ViewHolder(view) {
+    inner class VideoViewHolder(val view: PdaVideoItemBinding) : RecyclerView.ViewHolder(view.root) {
 
         fun bind(hasChildren: Boolean = false, edge: Edge?) {
-            val context = view.pda_item_postVideo.context
+            val context = view.pdaItemPostVideo.context
 
             val exoPlayer = SimpleExoPlayer.Builder(context).build()
             val defaultDataSourceFactory = DefaultDataSourceFactory(context, Util.getUserAgent(context, R.string.app_name.toString()))
@@ -78,10 +73,14 @@ class PostDetailsAdapter(val model: PostModel) : RecyclerView.Adapter<RecyclerVi
             val url = if (hasChildren) edge?.node?.videoUrl!!
             else model.graphql?.shortcodeMedia?.videoUrl!!
 
-            view.pda_item_postVideo.player = exoPlayer
-            view.pda_item_postVideo.requestFocus()
+            view.url = url
+            view.adapter = this@PostDetailsAdapter
+            view.edge = edge
 
-            view.pda_item_postVideo.addOnAttachStateChangeListener(object : View.OnAttachStateChangeListener {
+            view.pdaItemPostVideo.player = exoPlayer
+            view.pdaItemPostVideo.requestFocus()
+
+            view.pdaItemPostVideo.addOnAttachStateChangeListener(object : View.OnAttachStateChangeListener {
                 override fun onViewDetachedFromWindow(p0: View?) {
                     exoPlayer.stop()
                 }
@@ -91,24 +90,17 @@ class PostDetailsAdapter(val model: PostModel) : RecyclerView.Adapter<RecyclerVi
                     exoPlayer.playWhenReady = false
                 }
             })
-
-            view.pda_item_downloadPostVideo.setOnClickListener {
-                downloadUrl = url
-                postIsVideo = true
-                downloadPost(view.pda_item_postVideo.context)
-            }
-
-            val shareButton = view.pda_item_share_buttonVideo
-            shareButton.setOnClickListener { sharePost(view, url) }
         }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return if (viewType == typeImg) {
-            val view = LayoutInflater.from(parent.context).inflate(R.layout.pda_image_item, parent, false)
+            val inflater = LayoutInflater.from(parent.context)
+            val view = DataBindingUtil.inflate<PdaImageItemBinding>(inflater, R.layout.pda_image_item, parent, false)
             ImageViewHolder(view)
         } else {
-            val view = LayoutInflater.from(parent.context).inflate(R.layout.pda_video_item, parent, false)
+            val inflater = LayoutInflater.from(parent.context)
+            val view = DataBindingUtil.inflate<PdaVideoItemBinding>(inflater, R.layout.pda_video_item, parent, false)
             VideoViewHolder(view)
         }
     }
@@ -152,18 +144,24 @@ class PostDetailsAdapter(val model: PostModel) : RecyclerView.Adapter<RecyclerVi
 
     private fun downloadPost(context: Context) {
         when (ContextCompat.checkSelfPermission(context, android.Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
-            PackageManager.PERMISSION_GRANTED -> downloadFile(context, downloadUrl, postIsVideo)
+            PackageManager.PERMISSION_GRANTED -> downloadFile(context, downloadUrl, isVideo)
             else -> ActivityCompat.requestPermissions((context as PostDetailsActivity), arrayOf(android.Manifest.permission.WRITE_EXTERNAL_STORAGE), 1)
         }
 
     }
 
-    private fun sharePost(view: View, url: String){
+    fun downloadButtonClicked(view: View, url: String, postIsVideo: Boolean){
+        downloadUrl = url
+        isVideo = postIsVideo
+        downloadPost(view.context)
+    }
+
+    fun shareButtonClicked(view: View, url: String){
         val intent = Intent().apply {
             action = Intent.ACTION_SEND
             putExtra(Intent.EXTRA_TEXT, url)
             type = "text/plain"
         }
-        view.context.startActivity(intent)
+        startActivity(view.context, intent, null)
     }
 }
