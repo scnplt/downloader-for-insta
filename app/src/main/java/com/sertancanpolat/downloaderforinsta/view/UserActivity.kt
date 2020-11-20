@@ -6,28 +6,28 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
-import android.view.animation.AnimationUtils
+import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import com.sertancanpolat.downloaderforinsta.R
 import com.sertancanpolat.downloaderforinsta.adapter.UserPostsAdapter
+import com.sertancanpolat.downloaderforinsta.databinding.ActivityUserBinding
 import com.sertancanpolat.downloaderforinsta.utilities.ProcessState
-import com.sertancanpolat.downloaderforinsta.utilities.loadImage
 import com.sertancanpolat.downloaderforinsta.utilities.progressDialogBuilder
 import com.sertancanpolat.downloaderforinsta.viewmodel.UserViewModel
 import com.sertancanpolat.downloaderforinsta.viewmodelFactory.UserViewModelFactory
 import kotlinx.android.synthetic.main.activity_user.*
-import kotlinx.android.synthetic.main.ua_info.*
 
 class UserActivity : AppCompatActivity() {
     private lateinit var viewModel: UserViewModel
     private lateinit var progressDialog: Dialog
     private lateinit var userPostsAdapter: UserPostsAdapter
     private lateinit var userName: String
+    private lateinit var binding: ActivityUserBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_user)
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_user)
 
         userName = intent.getStringExtra("userName")!!
         val viewModelFactory = UserViewModelFactory()
@@ -137,11 +137,7 @@ class UserActivity : AppCompatActivity() {
             ua_rvPosts.layoutManager = GridLayoutManager(this, 3, GridLayoutManager.VERTICAL, false)
         }
 
-        ua_info_imgViewUser.loadImage(url = user.profilePicUrlHd, isCircle = true)
-        ua_info_txtViewName.text = user.fullName
-        ua_info_txtViewFollowers.text = user.edgeFollowedBy?.count.toString()
-        ua_info_txtViewFollowing.text = user.edgeFollow?.count.toString()
-        ua_info_txtViewPost.text = user.edgeOwnerToTimelineMedia?.count.toString()
+        binding.userModel = user
     }
 
     private val recyclerViewListener = { _: View, _: Int, _: Int, _: Int, _: Int ->

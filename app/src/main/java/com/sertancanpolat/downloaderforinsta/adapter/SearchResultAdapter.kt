@@ -9,15 +9,13 @@ import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.sertancanpolat.downloaderforinsta.R
 import com.sertancanpolat.downloaderforinsta.databinding.SraItemRowBinding
-import com.sertancanpolat.downloaderforinsta.model.SUMUserUser
 import com.sertancanpolat.downloaderforinsta.model.SearchedUserModel
 import com.sertancanpolat.downloaderforinsta.view.UserActivity
 
 class SearchResultAdapter(private val result: SearchedUserModel) :
     RecyclerView.Adapter<SearchResultAdapter.SearchResultActivityViewHolder>() {
 
-    class SearchResultActivityViewHolder(var view: SraItemRowBinding) :
-        RecyclerView.ViewHolder(view.root)
+    class SearchResultActivityViewHolder(var view: SraItemRowBinding) : RecyclerView.ViewHolder(view.root)
 
     override fun getItemCount(): Int = result.users?.size ?: 0
 
@@ -32,7 +30,7 @@ class SearchResultAdapter(private val result: SearchedUserModel) :
         holder.view.adapter = this
     }
 
-    fun onSraItemRowClicked(v: View, user: SUMUserUser){
+    fun onSraItemRowClicked(v: View, user: SearchedUserModel.UserWithPosition.User){
         val intent = Intent(v.context, UserActivity::class.java)
         intent.putExtra("userName", user.username)
         startActivity(v.context, intent, null)

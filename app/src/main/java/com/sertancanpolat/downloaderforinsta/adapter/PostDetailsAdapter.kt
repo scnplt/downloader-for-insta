@@ -9,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.exoplayer2.*
 import com.google.android.exoplayer2.source.ProgressiveMediaSource
@@ -18,7 +19,6 @@ import com.sertancanpolat.downloaderforinsta.R
 import com.sertancanpolat.downloaderforinsta.model.PostModel
 import com.sertancanpolat.downloaderforinsta.model.helper_class.Edge
 import com.sertancanpolat.downloaderforinsta.utilities.downloadFile
-import com.sertancanpolat.downloaderforinsta.utilities.loadImage
 import com.sertancanpolat.downloaderforinsta.view.PostDetailsActivity
 import kotlinx.android.synthetic.main.pda_image_item.view.*
 import kotlinx.android.synthetic.main.pda_video_item.view.*
@@ -51,9 +51,10 @@ class PostDetailsAdapter(val model: PostModel) : RecyclerView.Adapter<RecyclerVi
                 height = (model.graphql?.shortcodeMedia?.dimensions?.height!! * ratio).toInt()
             }
 
+
             view.pda_item_postImage.layoutParams.width = width
             view.pda_item_postImage.layoutParams.height = height
-            view.pda_item_postImage.loadImage(url)
+
 
             view.pda_item_downloadPostImage.setOnClickListener {
                 downloadUrl = url
@@ -61,8 +62,7 @@ class PostDetailsAdapter(val model: PostModel) : RecyclerView.Adapter<RecyclerVi
                 downloadPost(view.pda_item_postImage.context)
             }
 
-            val shareButton = view.pda_item_share_buttonImage
-            shareButton.setOnClickListener { sharePost(view, url) }
+
         }
     }
 
