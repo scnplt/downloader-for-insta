@@ -32,8 +32,6 @@
             android:layout_alignParentTop="true"
             android:layout_alignParentEnd="true"
             android:contentDescription="@string/pda_image_item_content_image"
-            android:downloadWidth="@{null}"
-            android:downloadHeight="@{null}"
             android:downloadIsCircle="@{false}"
             android:downloadUrl="@{url}"
             android:src="@mipmap/ic_launcher_round" />

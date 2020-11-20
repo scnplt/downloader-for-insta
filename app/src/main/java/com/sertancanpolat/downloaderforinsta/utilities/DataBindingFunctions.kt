@@ -4,16 +4,9 @@ import android.view.View
 import android.widget.ImageView
 import androidx.databinding.BindingAdapter
 
-@BindingAdapter(
-    "android:downloadUrl",
-    "android:downloadWidth",
-    "android:downloadHeight",
-    "android:downloadIsCircle"
-)
-fun downloadImage(view: ImageView, url: String?, width: Int?, height: Int?, isCircle: Boolean) {
-    if (width != null && height != null) view.loadImage(url, width, height, isCircle)
-    else view.loadImage(url, isCircle = isCircle)
-}
+@BindingAdapter("android:downloadUrl", "android:downloadIsCircle")
+fun downloadImage(view: ImageView, url: String?, isCircle: Boolean) = view.loadImage(url, isCircle = isCircle)
+
 
 @BindingAdapter("android:isPrivate")
 fun isPrivate(view: ImageView, isPrivate: Boolean){

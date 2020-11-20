@@ -4,46 +4,50 @@ import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.animation.AnimationUtils
 import androidx.core.content.ContextCompat.startActivity
+import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.sertancanpolat.downloaderforinsta.R
+import com.sertancanpolat.downloaderforinsta.databinding.UaPostItemBinding
 import com.sertancanpolat.downloaderforinsta.model.UserModel
 import com.sertancanpolat.downloaderforinsta.model.helper_class.Edge
 import com.sertancanpolat.downloaderforinsta.utilities.loadImage
 import com.sertancanpolat.downloaderforinsta.view.PostDetailsActivity
-import kotlinx.android.synthetic.main.ua_post_item.view.*
 
 class UserPostsAdapter(val model: UserModel.Graphql.User?) :
     RecyclerView.Adapter<UserPostsAdapter.UserPostViewHolder>() {
 
-    class UserPostViewHolder(var view: View) : RecyclerView.ViewHolder(view) {
+    inner class UserPostViewHolder(var view: UaPostItemBinding) : RecyclerView.ViewHolder(view.root) {
 
         fun bind(edge: Edge?) {
-            val width = view.resources.displayMetrics.widthPixels / 3 - 3
-            view.layoutParams.width = width
-            view.layoutParams.height = width
-            view.ua_item_imgViewPost.loadImage(
+            view.edge = edge
+            view.adapter = this@UserPostsAdapter
+
+            val width = view.root.resources.displayMetrics.widthPixels / 3 - 3
+            view.root.layoutParams.width = width
+            view.root.layoutParams.height = width
+            view.uaItemImgViewPost.loadImage(
                 url = edge?.node?.displayUrl,
                 width = width,
                 height = width
             )
-            view.ua_item_imgViewPost.setOnClickListener {
-                val intent = Intent(view.context, PostDetailsActivity::class.java)
-                intent.putExtra("shortCode", edge?.node?.shortcode)
-                startActivity(view.context, intent, null)
-            }
         }
     }
 
+    fun itemClicked(view: View, shortCode: String){
+        val intent = Intent(view.context, PostDetailsActivity::class.java)
+        intent.putExtra("shortCode", shortCode)
+        startActivity(view.context, intent, null)
+    }
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): UserPostViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.ua_post_item, parent, false)
+        val inflater = LayoutInflater.from(parent.context)
+        val view = DataBindingUtil.inflate<UaPostItemBinding>(inflater, R.layout.ua_post_item, parent, false)
         return UserPostViewHolder(view)
     }
 
     override fun getItemCount(): Int = model?.edgeOwnerToTimelineMedia?.edges?.size ?: 0
 
-    override fun onBindViewHolder(holder: UserPostViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: UserPostViewHolder, position: Int) =
         holder.bind(model?.edgeOwnerToTimelineMedia?.edges?.get(position))
-    }
 }

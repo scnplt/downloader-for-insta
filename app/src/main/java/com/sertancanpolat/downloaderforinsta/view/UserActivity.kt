@@ -118,8 +118,7 @@ class UserActivity : AppCompatActivity() {
                         viewModel.lastMediaIndex.value!!,
                         viewModel.incomingMediaSize.value!!
                     )
-                    viewModel.lastMediaIndex.value =
-                        viewModel.userModel.value?.graphql?.user?.edgeOwnerToTimelineMedia?.edges?.size
+                    viewModel.lastMediaIndex.value = viewModel.userModel.value?.graphql?.user?.edgeOwnerToTimelineMedia?.edges?.size
                     progressDialog.cancel()
                 }
                 else -> {

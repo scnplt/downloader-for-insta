@@ -56,8 +56,6 @@
                             android:layout_height="160dp"
                             android:layout_marginTop="16dp"
                             android:contentDescription="@string/sra_item_row_img_content_profile_pic"
-                            android:downloadWidth="@{null}"
-                            android:downloadHeight="@{null}"
                             android:downloadIsCircle="@{true}"
                             android:downloadUrl="@{userModel.profilePicUrlHd}"
                             app:layout_constraintEnd_toEndOf="parent"

@@ -33,8 +33,6 @@
                 android:layout_width="120dp"
                 android:layout_height="120dp"
                 android:contentDescription="@string/sra_item_row_img_content_profile_pic"
-                android:downloadWidth="@{null}"
-                android:downloadHeight="@{null}"
                 android:downloadIsCircle="@{true}"
                 android:downloadUrl="@{userModel.profilePicUrl}"
                 android:scaleType="fitCenter"
