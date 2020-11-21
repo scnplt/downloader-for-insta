@@ -12,8 +12,8 @@ android {
         applicationId "com.sertancanpolat.downloaderforinsta"
         minSdkVersion 23
         targetSdkVersion 30
-        versionCode 12
-        versionName "1.0.5"
+        versionCode 1
+        versionName "1.0.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
