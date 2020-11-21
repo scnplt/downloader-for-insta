@@ -11,7 +11,7 @@
 
         <variable
             name="listener"
-            type="com.sertancanpolat.downloaderforinsta.adapter.SRAItem" />
+            type="com.sertancanpolat.downloaderforinsta.data_binding_interfaces.SRAItem" />
     </data>
 
     <androidx.cardview.widget.CardView

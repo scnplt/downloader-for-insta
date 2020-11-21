@@ -8,16 +8,20 @@ import androidx.core.content.ContextCompat.startActivity
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.sertancanpolat.downloaderforinsta.R
+import com.sertancanpolat.downloaderforinsta.data_binding_interfaces.SRAItem
 import com.sertancanpolat.downloaderforinsta.databinding.SraItemRowBinding
 import com.sertancanpolat.downloaderforinsta.model.SearchedUserModel
 import com.sertancanpolat.downloaderforinsta.view.UserActivity
+import javax.inject.Inject
 
-class SearchResultAdapter(private val result: SearchedUserModel) :
-    RecyclerView.Adapter<SearchResultAdapter.SearchResultActivityViewHolder>(), SRAItem {
+class SearchResultAdapter @Inject constructor() : RecyclerView.Adapter<SearchResultAdapter.SearchResultActivityViewHolder>(),
+    SRAItem {
+
+    lateinit var result: SearchedUserModel
 
     inner class SearchResultActivityViewHolder(var view: SraItemRowBinding) : RecyclerView.ViewHolder(view.root) {
 
-        fun bind(user: SearchedUserModel.UserWithPosition.User?){
+        fun bind(user: SearchedUserModel.UserWithPosition.User?) {
             view.listener = this@SearchResultAdapter
             view.userModel = user
         }
@@ -27,7 +31,12 @@ class SearchResultAdapter(private val result: SearchedUserModel) :
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SearchResultActivityViewHolder {
         val inflater = LayoutInflater.from(parent.context)
-        val view = DataBindingUtil.inflate<SraItemRowBinding>(inflater, R.layout.sra_item_row, parent, false)
+        val view = DataBindingUtil.inflate<SraItemRowBinding>(
+            inflater,
+            R.layout.sra_item_row,
+            parent,
+            false
+        )
         return SearchResultActivityViewHolder(view)
     }
 

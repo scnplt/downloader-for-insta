@@ -12,6 +12,7 @@ import androidx.core.content.ContextCompat.startActivity
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.sertancanpolat.downloaderforinsta.R
+import com.sertancanpolat.downloaderforinsta.data_binding_interfaces.PDAItem
 import com.sertancanpolat.downloaderforinsta.databinding.PdaImageItemBinding
 import com.sertancanpolat.downloaderforinsta.databinding.PdaVideoItemBinding
 import com.sertancanpolat.downloaderforinsta.model.PostModel
@@ -19,9 +20,12 @@ import com.sertancanpolat.downloaderforinsta.model.helper_class.Edge
 import com.sertancanpolat.downloaderforinsta.utilities.downloadFile
 import com.sertancanpolat.downloaderforinsta.utilities.screenWidth
 import com.sertancanpolat.downloaderforinsta.view.PostDetailsActivity
+import javax.inject.Inject
 import kotlin.properties.Delegates
 
-class PostDetailsAdapter(val model: PostModel) : RecyclerView.Adapter<RecyclerView.ViewHolder>(), PDAItem {
+class PostDetailsAdapter @Inject constructor() : RecyclerView.Adapter<RecyclerView.ViewHolder>(),
+    PDAItem {
+    lateinit var model: PostModel
     private val typeVideo = 1
     private val typeImg = 0
     lateinit var downloadUrl: String

@@ -15,9 +15,11 @@ import com.sertancanpolat.downloaderforinsta.utilities.*
 import com.sertancanpolat.downloaderforinsta.viewmodel.PostDetailsViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_post_details.*
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class PostDetailsActivity : AppCompatActivity() {
+    @Inject lateinit var adapter: PostDetailsAdapter
     private val viewModel: PostDetailsViewModel by viewModels()
 
     private lateinit var shortCode: String
@@ -67,7 +69,7 @@ class PostDetailsActivity : AppCompatActivity() {
                 }
                 ProcessState.LOADED -> {
                     pda_txtViewError.visibility = View.GONE
-                    postAdapter = PostDetailsAdapter(viewModel.postModel.value!!)
+                    postAdapter = adapter.apply { model = viewModel.postModel.value!! }
                     pda_rvPostDetails.adapter = postAdapter
                     pda_rvPostDetails.layoutManager =
                         LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)

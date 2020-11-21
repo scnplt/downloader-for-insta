@@ -17,9 +17,11 @@ import com.sertancanpolat.downloaderforinsta.utilities.progressDialog
 import com.sertancanpolat.downloaderforinsta.viewmodel.UserViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_user.*
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class UserActivity : AppCompatActivity() {
+    @Inject lateinit var adapter: UserPostsAdapter
     private val viewModel: UserViewModel by viewModels()
 
     private lateinit var userPostsAdapter: UserPostsAdapter
@@ -126,7 +128,7 @@ class UserActivity : AppCompatActivity() {
         val user = viewModel.userModel.value?.graphql?.user!!
 
         if (!user.isPrivate) {
-            userPostsAdapter = UserPostsAdapter(user)
+            userPostsAdapter = adapter.apply { model = user }
             ua_rvPosts.adapter = userPostsAdapter
             ua_rvPosts.layoutManager = GridLayoutManager(this, 3, GridLayoutManager.VERTICAL, false)
         }
