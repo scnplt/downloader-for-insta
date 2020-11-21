@@ -6,19 +6,21 @@ import android.content.pm.PackageManager
 import android.os.Bundle
 import android.view.MenuItem
 import android.view.View
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.sertancanpolat.downloaderforinsta.R
 import com.sertancanpolat.downloaderforinsta.adapter.PostDetailsAdapter
 import com.sertancanpolat.downloaderforinsta.utilities.*
 import com.sertancanpolat.downloaderforinsta.viewmodel.PostDetailsViewModel
-import com.sertancanpolat.downloaderforinsta.viewmodelFactory.PostDetailsViewModelFactory
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_post_details.*
 
+@AndroidEntryPoint
 class PostDetailsActivity : AppCompatActivity() {
+    private val viewModel: PostDetailsViewModel by viewModels()
+
     private lateinit var shortCode: String
-    private lateinit var viewModel: PostDetailsViewModel
     private lateinit var progressDialog: Dialog
     private lateinit var postAdapter: PostDetailsAdapter
 
@@ -31,9 +33,6 @@ class PostDetailsActivity : AppCompatActivity() {
             url = url.subSequence(url.indexOf("http"), url.lastIndex).toString()
             getShortCodeFromUrl(url)
         } else intent.getStringExtra("shortCode")!!
-
-        val viewModelFactory = PostDetailsViewModelFactory()
-        viewModel = ViewModelProvider(this, viewModelFactory).get(PostDetailsViewModel::class.java)
 
         observeLiveData()
         progressDialog = this.progressDialog()

@@ -1,5 +1,6 @@
 package com.sertancanpolat.downloaderforinsta.viewmodel
 
+import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.sertancanpolat.downloaderforinsta.api.RetrofitBuilder
@@ -11,7 +12,7 @@ import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.observers.DisposableSingleObserver
 import io.reactivex.schedulers.Schedulers
 
-class UserViewModel : ViewModel() {
+class UserViewModel @ViewModelInject constructor() : ViewModel() {
     val userModel = MutableLiveData<UserModel>()
     val incomingMediaSize = MutableLiveData<Int>()
     val lastMediaIndex = MutableLiveData<Int>()

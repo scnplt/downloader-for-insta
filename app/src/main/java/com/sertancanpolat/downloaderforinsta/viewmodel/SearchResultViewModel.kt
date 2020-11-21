@@ -1,5 +1,6 @@
 package com.sertancanpolat.downloaderforinsta.viewmodel
 
+import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.sertancanpolat.downloaderforinsta.model.SearchedUserModel
@@ -10,7 +11,7 @@ import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.observers.DisposableSingleObserver
 import io.reactivex.schedulers.Schedulers
 
-class SearchResultViewModel : ViewModel() {
+class SearchResultViewModel @ViewModelInject constructor() : ViewModel() {
     val searchResult = MutableLiveData<SearchedUserModel>()
     val processState = MutableLiveData<ProcessState>()
     private val disposable = CompositeDisposable()

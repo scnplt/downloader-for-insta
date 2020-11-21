@@ -4,19 +4,22 @@ import android.app.Dialog
 import android.os.Bundle
 import android.view.MenuItem
 import android.view.View
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.sertancanpolat.downloaderforinsta.R
 import com.sertancanpolat.downloaderforinsta.adapter.SearchResultAdapter
 import com.sertancanpolat.downloaderforinsta.utilities.ProcessState
 import com.sertancanpolat.downloaderforinsta.utilities.progressDialog
 import com.sertancanpolat.downloaderforinsta.viewmodel.SearchResultViewModel
-import com.sertancanpolat.downloaderforinsta.viewmodelFactory.SearchResultViewModelFactory
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_search_result.*
+import javax.inject.Inject
 
+@AndroidEntryPoint
 class SearchResultActivity : AppCompatActivity() {
-    private lateinit var viewModel: SearchResultViewModel
+    private val viewModel: SearchResultViewModel by viewModels()
+
     private lateinit var progressDialog: Dialog
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -24,8 +27,6 @@ class SearchResultActivity : AppCompatActivity() {
         setContentView(R.layout.activity_search_result)
 
         val userName = intent.getStringExtra("userName")!!
-        val viewModelFactory = SearchResultViewModelFactory()
-        viewModel = ViewModelProvider(this, viewModelFactory).get(SearchResultViewModel::class.java)
 
         observeLiveData()
         viewModel.searchUser(userName)

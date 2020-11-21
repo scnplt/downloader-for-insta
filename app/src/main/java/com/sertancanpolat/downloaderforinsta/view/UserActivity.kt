@@ -6,8 +6,8 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import androidx.activity.viewModels
 import androidx.databinding.DataBindingUtil
-import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import com.sertancanpolat.downloaderforinsta.R
 import com.sertancanpolat.downloaderforinsta.adapter.UserPostsAdapter
@@ -15,13 +15,15 @@ import com.sertancanpolat.downloaderforinsta.databinding.ActivityUserBinding
 import com.sertancanpolat.downloaderforinsta.utilities.ProcessState
 import com.sertancanpolat.downloaderforinsta.utilities.progressDialog
 import com.sertancanpolat.downloaderforinsta.viewmodel.UserViewModel
-import com.sertancanpolat.downloaderforinsta.viewmodelFactory.UserViewModelFactory
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_user.*
 
+@AndroidEntryPoint
 class UserActivity : AppCompatActivity() {
-    private lateinit var viewModel: UserViewModel
-    private lateinit var progressDialog: Dialog
+    private val viewModel: UserViewModel by viewModels()
+
     private lateinit var userPostsAdapter: UserPostsAdapter
+    private lateinit var progressDialog: Dialog
     private lateinit var userName: String
     private lateinit var binding: ActivityUserBinding
 
@@ -30,8 +32,7 @@ class UserActivity : AppCompatActivity() {
         binding = DataBindingUtil.setContentView(this, R.layout.activity_user)
 
         userName = intent.getStringExtra("userName")!!
-        val viewModelFactory = UserViewModelFactory()
-        viewModel = ViewModelProvider(this, viewModelFactory).get(UserViewModel::class.java)
+
         observeLiveData()
         viewModel.getUser(userName)
 
