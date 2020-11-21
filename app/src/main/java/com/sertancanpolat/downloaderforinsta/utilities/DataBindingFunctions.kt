@@ -45,12 +45,8 @@ fun loadVideo(view: PlayerView, url: String){
     exoPlayer.playWhenReady = false
 
     view.addOnAttachStateChangeListener(object : View.OnAttachStateChangeListener{
+        override fun onViewAttachedToWindow(p0: View?) {}
         override fun onViewDetachedFromWindow(p0: View?) {
-            exoPlayer.stop()
-        }
-
-        override fun onViewAttachedToWindow(p0: View?) {
-            exoPlayer.prepare(mediaSource.createMediaSource(Uri.parse(url)))
             exoPlayer.playWhenReady = false
         }
     })

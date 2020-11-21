@@ -33,8 +33,7 @@
             android:downloadWidth="@{width}"
             android:downloadIsCircle="@{false}"
             android:downloadUrl="@{edge.node.displayUrl}"
-            android:onClick="@{(view) -> listener.onClicked(view, edge.node.shortcode)}"
-            android:src="@android:mipmap/sym_def_app_icon" />
+            android:onClick="@{(view) -> listener.onClicked(view, edge.node.shortcode)}" />
     </FrameLayout>
 </layout>
 
