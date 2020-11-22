@@ -21,11 +21,9 @@ import com.sertancanpolat.downloaderforinsta.utilities.downloadFile
 import com.sertancanpolat.downloaderforinsta.utilities.screenWidth
 import com.sertancanpolat.downloaderforinsta.view.PostDetailsActivity
 import javax.inject.Inject
-import javax.inject.Singleton
 import kotlin.properties.Delegates
 
-class PostDetailsAdapter @Inject constructor() : RecyclerView.Adapter<RecyclerView.ViewHolder>(),
-    PDAItemListener {
+class PostDetailsAdapter @Inject constructor() : RecyclerView.Adapter<RecyclerView.ViewHolder>(), PDAItemListener {
     lateinit var model: PostModel
     private val typeVideo = 1
     private val typeImg = 0

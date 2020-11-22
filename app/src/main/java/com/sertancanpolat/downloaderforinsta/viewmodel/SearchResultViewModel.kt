@@ -3,8 +3,8 @@ package com.sertancanpolat.downloaderforinsta.viewmodel
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.sertancanpolat.downloaderforinsta.model.SearchedUserModel
 import com.sertancanpolat.downloaderforinsta.api.InstagramApiBuilder
+import com.sertancanpolat.downloaderforinsta.model.SearchedUserModel
 import com.sertancanpolat.downloaderforinsta.utilities.ProcessState
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable

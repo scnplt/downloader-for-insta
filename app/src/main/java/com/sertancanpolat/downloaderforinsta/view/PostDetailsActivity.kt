@@ -24,7 +24,6 @@ class PostDetailsActivity : AppCompatActivity() {
 
     private lateinit var shortCode: String
     private lateinit var progressDialog: Dialog
-    private lateinit var postAdapter: PostDetailsAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -69,8 +68,7 @@ class PostDetailsActivity : AppCompatActivity() {
                 }
                 ProcessState.LOADED -> {
                     pda_txtViewError.visibility = View.GONE
-                    postAdapter = adapter.apply { model = viewModel.postModel.value!! }
-                    pda_rvPostDetails.adapter = postAdapter
+                    pda_rvPostDetails.adapter = adapter.apply { model = viewModel.postModel.value!! }
                     pda_rvPostDetails.layoutManager =
                         LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
                     pda_rvPostDetails.visibility = View.VISIBLE
@@ -86,7 +84,7 @@ class PostDetailsActivity : AppCompatActivity() {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         if (requestCode == 1 && grantResults.isNotEmpty()) {
             if (grantResults[0] == PackageManager.PERMISSION_GRANTED)
-                downloadFile(this, postAdapter.downloadUrl, postAdapter.isVideo)
+                downloadFile(this, adapter.downloadUrl, adapter.isVideo)
             else this.snackBar("Please enable storage access permission.", 18f)
         }
     }

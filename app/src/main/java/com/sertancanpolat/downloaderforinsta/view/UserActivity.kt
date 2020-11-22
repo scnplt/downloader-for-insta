@@ -24,7 +24,6 @@ class UserActivity : AppCompatActivity() {
     @Inject lateinit var adapter: UserPostsAdapter
     private val viewModel: UserViewModel by viewModels()
 
-    private lateinit var userPostsAdapter: UserPostsAdapter
     private lateinit var progressDialog: Dialog
     private lateinit var userName: String
     private lateinit var binding: ActivityUserBinding
@@ -111,7 +110,7 @@ class UserActivity : AppCompatActivity() {
                     progressDialog.cancel()
                 }
                 ProcessState.LOADED -> {
-                    userPostsAdapter.notifyItemRangeInserted(
+                    adapter.notifyItemRangeInserted(
                         viewModel.lastMediaIndex.value!!,
                         viewModel.incomingMediaSize.value!!
                     )
@@ -128,8 +127,7 @@ class UserActivity : AppCompatActivity() {
         val user = viewModel.userModel.value?.graphql?.user!!
 
         if (!user.isPrivate) {
-            userPostsAdapter = adapter.apply { model = user }
-            ua_rvPosts.adapter = userPostsAdapter
+            ua_rvPosts.adapter = adapter.apply { model = user }
             ua_rvPosts.layoutManager = GridLayoutManager(this, 3, GridLayoutManager.VERTICAL, false)
         }
 
