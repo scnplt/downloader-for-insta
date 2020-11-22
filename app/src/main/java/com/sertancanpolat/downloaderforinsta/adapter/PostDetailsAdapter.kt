@@ -20,11 +20,14 @@ import com.sertancanpolat.downloaderforinsta.model.helper_class.Edge
 import com.sertancanpolat.downloaderforinsta.utilities.downloadFile
 import com.sertancanpolat.downloaderforinsta.utilities.screenWidth
 import com.sertancanpolat.downloaderforinsta.view.PostDetailsActivity
+import dagger.hilt.android.scopes.ActivityScoped
 import javax.inject.Inject
 import kotlin.properties.Delegates
 
-class PostDetailsAdapter @Inject constructor() : RecyclerView.Adapter<RecyclerView.ViewHolder>(), PDAItemListener {
-    lateinit var model: PostModel
+@ActivityScoped
+class PostDetailsAdapter @Inject constructor(var postModel: PostModel) :
+    RecyclerView.Adapter<RecyclerView.ViewHolder>(), PDAItemListener {
+
     private val typeVideo = 1
     private val typeImg = 0
     lateinit var downloadUrl: String
@@ -45,10 +48,10 @@ class PostDetailsAdapter @Inject constructor() : RecyclerView.Adapter<RecyclerVi
                 height = (edge.node?.dimensions?.height!! * ratio).toInt()
 
             } else {
-                url = model.graphql?.shortcodeMedia?.displayUrl!!
-                ratio = view.root.context.screenWidth / model.graphql?.shortcodeMedia?.dimensions?.width!!.toDouble()
-                width = (model.graphql?.shortcodeMedia?.dimensions?.width!! * ratio).toInt()
-                height = (model.graphql?.shortcodeMedia?.dimensions?.height!! * ratio).toInt()
+                url = postModel.graphql?.shortcodeMedia?.displayUrl!!
+                ratio = view.root.context.screenWidth / postModel.graphql?.shortcodeMedia?.dimensions?.width!!.toDouble()
+                width = (postModel.graphql?.shortcodeMedia?.dimensions?.width!! * ratio).toInt()
+                height = (postModel.graphql?.shortcodeMedia?.dimensions?.height!! * ratio).toInt()
             }
 
             view.pdaItemPostImage.layoutParams.height = height
@@ -62,7 +65,7 @@ class PostDetailsAdapter @Inject constructor() : RecyclerView.Adapter<RecyclerVi
     inner class VideoViewHolder(val view: PdaVideoItemBinding) : RecyclerView.ViewHolder(view.root) {
 
         fun bind(hasChildren: Boolean = false, edge: Edge?) {
-            val url = if (hasChildren) edge?.node?.videoUrl!! else model.graphql?.shortcodeMedia?.videoUrl!!
+            val url = if (hasChildren) edge?.node?.videoUrl!! else postModel.graphql?.shortcodeMedia?.videoUrl!!
 
             view.listener = this@PostDetailsAdapter
             view.edge = edge
@@ -83,22 +86,22 @@ class PostDetailsAdapter @Inject constructor() : RecyclerView.Adapter<RecyclerVi
     }
 
     override fun getItemCount(): Int {
-        return if (model.graphql?.shortcodeMedia?.edgeSidecarToChildren == null) 1
-        else model.graphql?.shortcodeMedia?.edgeSidecarToChildren?.edges?.size!!
+        return if (postModel.graphql?.shortcodeMedia?.edgeSidecarToChildren == null) 1
+        else postModel.graphql?.shortcodeMedia?.edgeSidecarToChildren?.edges?.size!!
     }
 
     override fun getItemViewType(position: Int): Int {
-        return if (model.graphql?.shortcodeMedia?.edgeSidecarToChildren == null) {
-            if (model.graphql?.shortcodeMedia?.isVideo!!) typeVideo
+        return if (postModel.graphql?.shortcodeMedia?.edgeSidecarToChildren == null) {
+            if (postModel.graphql?.shortcodeMedia?.isVideo!!) typeVideo
             else typeImg
         } else {
-            if (model.graphql?.shortcodeMedia?.edgeSidecarToChildren?.edges?.get(position)?.node?.isVideo!!) typeVideo
+            if (postModel.graphql?.shortcodeMedia?.edgeSidecarToChildren?.edges?.get(position)?.node?.isVideo!!) typeVideo
             else typeImg
         }
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        val shortcodeMedia = model.graphql?.shortcodeMedia
+        val shortcodeMedia = postModel.graphql?.shortcodeMedia
 
         if (shortcodeMedia?.edgeSidecarToChildren == null) {
             if (shortcodeMedia?.isVideo!!) (holder as VideoViewHolder).bind(false, null)

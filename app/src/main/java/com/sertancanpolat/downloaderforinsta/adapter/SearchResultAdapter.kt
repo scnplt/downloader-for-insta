@@ -1,5 +1,6 @@
 package com.sertancanpolat.downloaderforinsta.adapter
 
+import android.animation.ValueAnimator
 import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
@@ -12,36 +13,36 @@ import com.sertancanpolat.downloaderforinsta.data_binding_listeners.SRAItemListe
 import com.sertancanpolat.downloaderforinsta.databinding.SraItemRowBinding
 import com.sertancanpolat.downloaderforinsta.model.SearchedUserModel
 import com.sertancanpolat.downloaderforinsta.view.UserActivity
+import dagger.hilt.android.scopes.ActivityScoped
 import javax.inject.Inject
 
-class SearchResultAdapter @Inject constructor() : RecyclerView.Adapter<SearchResultAdapter.SearchResultActivityViewHolder>(),
-    SRAItemListener {
+@ActivityScoped
+class SearchResultAdapter @Inject constructor(var searchedUserModel: SearchedUserModel) :
+    RecyclerView.Adapter<SearchResultAdapter.SearchResultActivityViewHolder>(), SRAItemListener {
 
-    lateinit var result: SearchedUserModel
+    class SearchResultActivityViewHolder(var view: SraItemRowBinding) : RecyclerView.ViewHolder(view.root)
 
-    inner class SearchResultActivityViewHolder(var view: SraItemRowBinding) : RecyclerView.ViewHolder(view.root) {
-
-        fun bind(user: SearchedUserModel.UserWithPosition.User?) {
-            view.listener = this@SearchResultAdapter
-            view.userModel = user
-        }
-    }
-
-    override fun getItemCount(): Int = result.users?.size ?: 0
+    override fun getItemCount(): Int = searchedUserModel.users?.size ?: 0
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SearchResultActivityViewHolder {
         val inflater = LayoutInflater.from(parent.context)
-        val view = DataBindingUtil.inflate<SraItemRowBinding>(
-            inflater,
-            R.layout.sra_item_row,
-            parent,
-            false
-        )
+        val view = DataBindingUtil.inflate<SraItemRowBinding>(inflater, R.layout.sra_item_row, parent, false)
         return SearchResultActivityViewHolder(view)
     }
 
     override fun onBindViewHolder(holder: SearchResultActivityViewHolder, position: Int) {
-        holder.bind(result.users!![position].user)
+        holder.view.listener = this
+        holder.view.userModel = searchedUserModel.users!![position].user
+
+        val animator = ValueAnimator.ofFloat(0.85f, 1f)
+        animator.duration = 400
+        animator.start()
+
+        animator.addUpdateListener {
+            val value = it.animatedValue as Float
+            holder.view.root.scaleX = value
+            holder.view.root.scaleY = value
+        }
     }
 
     override fun onClicked(v: View, user: SearchedUserModel.UserWithPosition.User) {

@@ -68,7 +68,7 @@ class PostDetailsActivity : AppCompatActivity() {
                 }
                 ProcessState.LOADED -> {
                     pda_txtViewError.visibility = View.GONE
-                    pda_rvPostDetails.adapter = adapter.apply { model = viewModel.postModel.value!! }
+                    pda_rvPostDetails.adapter = adapter.apply { postModel = viewModel.postModel.value!! }
                     pda_rvPostDetails.layoutManager =
                         LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
                     pda_rvPostDetails.visibility = View.VISIBLE

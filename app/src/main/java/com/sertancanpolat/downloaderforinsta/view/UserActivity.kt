@@ -127,7 +127,7 @@ class UserActivity : AppCompatActivity() {
         val user = viewModel.userModel.value?.graphql?.user!!
 
         if (!user.isPrivate) {
-            ua_rvPosts.adapter = adapter.apply { model = user }
+            ua_rvPosts.adapter = adapter.apply { userModel = user }
             ua_rvPosts.layoutManager = GridLayoutManager(this, 3, GridLayoutManager.VERTICAL, false)
         }
 

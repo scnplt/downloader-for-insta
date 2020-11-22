@@ -11,27 +11,16 @@ import com.sertancanpolat.downloaderforinsta.R
 import com.sertancanpolat.downloaderforinsta.data_binding_listeners.UAPostItemListener
 import com.sertancanpolat.downloaderforinsta.databinding.UaPostItemBinding
 import com.sertancanpolat.downloaderforinsta.model.UserModel
-import com.sertancanpolat.downloaderforinsta.model.helper_class.Edge
 import com.sertancanpolat.downloaderforinsta.utilities.screenWidth
 import com.sertancanpolat.downloaderforinsta.view.PostDetailsActivity
+import dagger.hilt.android.scopes.ActivityScoped
 import javax.inject.Inject
 
-class UserPostsAdapter @Inject constructor() : RecyclerView.Adapter<UserPostsAdapter.UserPostViewHolder>(), UAPostItemListener {
+@ActivityScoped
+class UserPostsAdapter @Inject constructor(var userModel: UserModel.Graphql.User) :
+    RecyclerView.Adapter<UserPostsAdapter.UserPostViewHolder>(), UAPostItemListener {
 
-    lateinit var model: UserModel.Graphql.User
-
-    inner class UserPostViewHolder(var view: UaPostItemBinding) : RecyclerView.ViewHolder(view.root) {
-
-        fun bind(edge: Edge?) {
-            val width = view.root.context.screenWidth / 3 - 3
-
-            view.root.layoutParams.height = width
-            view.root.layoutParams.width = width
-            view.width = width
-            view.listener = this@UserPostsAdapter
-            view.edge = edge
-        }
-    }
+    class UserPostViewHolder(var view: UaPostItemBinding) : RecyclerView.ViewHolder(view.root)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): UserPostViewHolder {
         val inflater = LayoutInflater.from(parent.context)
@@ -39,10 +28,18 @@ class UserPostsAdapter @Inject constructor() : RecyclerView.Adapter<UserPostsAda
         return UserPostViewHolder(view)
     }
 
-    override fun getItemCount(): Int = model.edgeOwnerToTimelineMedia?.edges?.size ?: 0
+    override fun getItemCount(): Int = userModel.edgeOwnerToTimelineMedia?.edges?.size ?: 0
 
     override fun onBindViewHolder(holder: UserPostViewHolder, position: Int) {
-        holder.bind(model.edgeOwnerToTimelineMedia?.edges?.get(position))
+        val edge = userModel.edgeOwnerToTimelineMedia?.edges?.get(position)
+        val width = holder.view.root.context.screenWidth / 3 - 3
+
+        holder.view.root.layoutParams.height = width
+        holder.view.root.layoutParams.width = width
+
+        holder.view.listener = this
+        holder.view.width = width
+        holder.view.edge = edge
     }
 
     override fun onClicked(v: View, shortCode: String) {

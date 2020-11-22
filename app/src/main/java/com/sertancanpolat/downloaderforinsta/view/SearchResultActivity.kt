@@ -73,7 +73,7 @@ class SearchResultActivity : AppCompatActivity() {
                     }else {
                         sra_txtViewError.visibility = View.GONE
                         sra_txtViewUserNotFound.visibility = View.GONE
-                        sra_rvSearchUser.adapter = adapter.apply { result = viewModel.searchResult.value!! }
+                        sra_rvSearchUser.adapter = adapter.apply { searchedUserModel = viewModel.searchResult.value!! }
                         sra_rvSearchUser.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
                         sra_rvSearchUser.visibility = View.VISIBLE
                     }

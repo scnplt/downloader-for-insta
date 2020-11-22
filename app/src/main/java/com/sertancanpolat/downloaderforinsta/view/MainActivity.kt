@@ -17,10 +17,12 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         val service = getSystemService(InputMethodManager::class.java)
+
         ma_edTxtUserName.setOnEditorActionListener { t, i, _ ->
             if (i == EditorInfo.IME_ACTION_SEARCH && t.text.length > 2) {
                 val intent: Intent
                 val shortCode = getShortCodeFromUrl(t.text.toString())
+
                 if(shortCode == " "){
                     intent = Intent(this, SearchResultActivity::class.java)
                     intent.putExtra("userName", t.text.toString())
