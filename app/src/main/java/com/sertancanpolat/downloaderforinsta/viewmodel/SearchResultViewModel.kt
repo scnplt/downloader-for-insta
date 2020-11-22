@@ -4,7 +4,7 @@ import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.sertancanpolat.downloaderforinsta.model.SearchedUserModel
-import com.sertancanpolat.downloaderforinsta.api.RetrofitBuilder
+import com.sertancanpolat.downloaderforinsta.api.InstagramApiBuilder
 import com.sertancanpolat.downloaderforinsta.utilities.ProcessState
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
@@ -26,7 +26,7 @@ class SearchResultViewModel @ViewModelInject constructor() : ViewModel() {
     fun searchUser(userName: String) {
         processState.value = ProcessState.LOADING
         disposable.add(
-            RetrofitBuilder.api.searchUser(userName)
+            InstagramApiBuilder.api.searchUser(userName)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeWith(object : DisposableSingleObserver<SearchedUserModel>() {

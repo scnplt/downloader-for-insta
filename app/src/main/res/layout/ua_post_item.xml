@@ -9,7 +9,7 @@
 
         <variable
             name="listener"
-            type="com.sertancanpolat.downloaderforinsta.data_binding_interfaces.UAPostItem" />
+            type="com.sertancanpolat.downloaderforinsta.data_binding_listeners.UAPostItemListener" />
 
         <variable
             name="width"

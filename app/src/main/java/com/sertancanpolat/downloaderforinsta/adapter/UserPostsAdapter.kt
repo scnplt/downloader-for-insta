@@ -8,7 +8,7 @@ import androidx.core.content.ContextCompat.startActivity
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.sertancanpolat.downloaderforinsta.R
-import com.sertancanpolat.downloaderforinsta.data_binding_interfaces.UAPostItem
+import com.sertancanpolat.downloaderforinsta.data_binding_listeners.UAPostItemListener
 import com.sertancanpolat.downloaderforinsta.databinding.UaPostItemBinding
 import com.sertancanpolat.downloaderforinsta.model.UserModel
 import com.sertancanpolat.downloaderforinsta.model.helper_class.Edge
@@ -16,7 +16,7 @@ import com.sertancanpolat.downloaderforinsta.utilities.screenWidth
 import com.sertancanpolat.downloaderforinsta.view.PostDetailsActivity
 import javax.inject.Inject
 
-class UserPostsAdapter @Inject constructor() : RecyclerView.Adapter<UserPostsAdapter.UserPostViewHolder>(), UAPostItem {
+class UserPostsAdapter @Inject constructor() : RecyclerView.Adapter<UserPostsAdapter.UserPostViewHolder>(), UAPostItemListener {
 
     lateinit var model: UserModel.Graphql.User
 

@@ -3,7 +3,7 @@ package com.sertancanpolat.downloaderforinsta.viewmodel
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.sertancanpolat.downloaderforinsta.api.RetrofitBuilder
+import com.sertancanpolat.downloaderforinsta.api.InstagramApiBuilder
 import com.sertancanpolat.downloaderforinsta.model.UserDataModel
 import com.sertancanpolat.downloaderforinsta.model.UserModel
 import com.sertancanpolat.downloaderforinsta.utilities.ProcessState
@@ -35,7 +35,7 @@ class UserViewModel @ViewModelInject constructor() : ViewModel() {
     fun getUser(userName: String) {
         userState.value = ProcessState.LOADING
         disposable.add(
-            RetrofitBuilder.api.getUser(userName)
+            InstagramApiBuilder.api.getUser(userName)
                 .subscribeOn(Schedulers.single())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeWith(object : DisposableSingleObserver<UserModel>() {
@@ -56,7 +56,7 @@ class UserViewModel @ViewModelInject constructor() : ViewModel() {
         morePostState.value = ProcessState.LOADING
         val query = "{\"id\":\"$id\", \"first\":80, \"after\":\"$endCursor\"}"
         disposable.add(
-            RetrofitBuilder.api.getData(query)
+            InstagramApiBuilder.api.getData(query)
                 .subscribeOn(Schedulers.single())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeWith(object : DisposableSingleObserver<UserDataModel>() {

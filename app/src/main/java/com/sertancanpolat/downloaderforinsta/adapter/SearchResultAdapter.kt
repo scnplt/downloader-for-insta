@@ -8,14 +8,14 @@ import androidx.core.content.ContextCompat.startActivity
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.sertancanpolat.downloaderforinsta.R
-import com.sertancanpolat.downloaderforinsta.data_binding_interfaces.SRAItem
+import com.sertancanpolat.downloaderforinsta.data_binding_listeners.SRAItemListener
 import com.sertancanpolat.downloaderforinsta.databinding.SraItemRowBinding
 import com.sertancanpolat.downloaderforinsta.model.SearchedUserModel
 import com.sertancanpolat.downloaderforinsta.view.UserActivity
 import javax.inject.Inject
 
 class SearchResultAdapter @Inject constructor() : RecyclerView.Adapter<SearchResultAdapter.SearchResultActivityViewHolder>(),
-    SRAItem {
+    SRAItemListener {
 
     lateinit var result: SearchedUserModel
 

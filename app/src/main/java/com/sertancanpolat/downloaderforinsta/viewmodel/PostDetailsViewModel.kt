@@ -3,7 +3,7 @@ package com.sertancanpolat.downloaderforinsta.viewmodel
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.sertancanpolat.downloaderforinsta.api.RetrofitBuilder
+import com.sertancanpolat.downloaderforinsta.api.InstagramApiBuilder
 import com.sertancanpolat.downloaderforinsta.model.PostModel
 import com.sertancanpolat.downloaderforinsta.utilities.ProcessState
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -27,7 +27,7 @@ class PostDetailsViewModel @ViewModelInject constructor() : ViewModel() {
     fun getPost(shortCode: String) {
         processState.value = ProcessState.LOADING
         disposable.add(
-            RetrofitBuilder.api.getPost(shortCode)
+            InstagramApiBuilder.api.getPost(shortCode)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeWith(object : DisposableSingleObserver<PostModel>() {

@@ -14,7 +14,7 @@
 
         <variable
             name="listener"
-            type="com.sertancanpolat.downloaderforinsta.data_binding_interfaces.PDAItem" />
+            type="com.sertancanpolat.downloaderforinsta.data_binding_listeners.PDAItemListener" />
 
     </data>
 
