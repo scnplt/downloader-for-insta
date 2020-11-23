@@ -9,12 +9,11 @@ import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.sertancanpolat.downloaderforinsta.R
 import com.sertancanpolat.downloaderforinsta.adapter.PostDetailsAdapter
+import com.sertancanpolat.downloaderforinsta.databinding.ActivityPostDetailsBinding
 import com.sertancanpolat.downloaderforinsta.utilities.*
 import com.sertancanpolat.downloaderforinsta.viewmodel.PostDetailsViewModel
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.android.synthetic.main.activity_post_details.*
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -24,10 +23,12 @@ class PostDetailsActivity : AppCompatActivity() {
 
     private lateinit var shortCode: String
     private lateinit var progressDialog: Dialog
+    private lateinit var binding: ActivityPostDetailsBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_post_details)
+        binding = ActivityPostDetailsBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
         shortCode = if (intent.action == Intent.ACTION_SEND) {
             var url = intent.getStringExtra(Intent.EXTRA_TEXT)!!.toString()
@@ -56,22 +57,21 @@ class PostDetailsActivity : AppCompatActivity() {
         viewModel.processState.observe(this, { state ->
             when (state) {
                 ProcessState.IDLE -> {
-                    pda_rvPostDetails.visibility = View.GONE
-                    pda_txtViewError.visibility = View.GONE
+                    binding.pdaRvPostDetails.visibility = View.GONE
+                    binding.pdaTxtViewError.visibility = View.GONE
                     progressDialog.cancel()
                 }
                 ProcessState.LOADING -> progressDialog.show()
                 ProcessState.ERROR -> {
-                    pda_rvPostDetails.visibility = View.GONE
-                    pda_txtViewError.visibility = View.VISIBLE
+                    binding.pdaRvPostDetails.visibility = View.GONE
+                    binding.pdaTxtViewError.visibility = View.VISIBLE
                     progressDialog.cancel()
                 }
                 ProcessState.LOADED -> {
-                    pda_txtViewError.visibility = View.GONE
-                    pda_rvPostDetails.adapter = adapter.apply { postModel = viewModel.postModel.value!! }
-                    pda_rvPostDetails.layoutManager =
-                        LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
-                    pda_rvPostDetails.visibility = View.VISIBLE
+                    binding.pdaTxtViewError.visibility = View.GONE
+                    binding.pdaRvPostDetails.adapter = adapter.apply { postModel = viewModel.postModel.value!! }
+                    binding.pdaRvPostDetails.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
+                    binding.pdaRvPostDetails.visibility = View.VISIBLE
                     progressDialog.cancel()
                 }
                 else -> {

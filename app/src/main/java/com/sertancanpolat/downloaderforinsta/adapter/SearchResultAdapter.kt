@@ -34,8 +34,7 @@ class SearchResultAdapter @Inject constructor(var searchedUserModel: SearchedUse
         holder.view.listener = this
         holder.view.userModel = searchedUserModel.users!![position].user
 
-        val animator = ValueAnimator.ofFloat(0.85f, 1f)
-        animator.duration = 400
+        val animator = ValueAnimator.ofFloat(0.85f, 1f).apply { duration = 400 }
         animator.start()
 
         animator.addUpdateListener {

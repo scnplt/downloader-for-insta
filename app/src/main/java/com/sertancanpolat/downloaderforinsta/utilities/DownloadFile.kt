@@ -6,10 +6,10 @@ import android.content.Context
 import android.net.Uri
 import android.os.Environment
 import android.view.LayoutInflater
-import com.sertancanpolat.downloaderforinsta.R
-import kotlinx.android.synthetic.main.custom_alert_dialog.view.*
+import com.sertancanpolat.downloaderforinsta.databinding.CustomAlertDialogBinding
 
 fun downloadFile(context: Context, url: String, isVideo: Boolean) {
+
     val download: (AlertDialog) -> Unit = {
         val request = DownloadManager.Request(Uri.parse(url))
         request.setAllowedNetworkTypes(DownloadManager.Request.NETWORK_WIFI or DownloadManager.Request.NETWORK_MOBILE)
@@ -26,10 +26,13 @@ fun downloadFile(context: Context, url: String, isVideo: Boolean) {
     }
 
     val dialog = AlertDialog.Builder(context).create()
-    val view = LayoutInflater.from(context).inflate(R.layout.custom_alert_dialog, null)
-    view.cad_button_positive.setOnClickListener { download(dialog) }
-    view.cad_button_negative.setOnClickListener { dialog.cancel() }
-    dialog.setView(view)
+    val inflater = LayoutInflater.from(context)
+    val customAlertDialogBinding = CustomAlertDialogBinding.inflate(inflater)
+
+    customAlertDialogBinding.cadButtonPositive.setOnClickListener { download(dialog) }
+    customAlertDialogBinding.cadButtonNegative.setOnClickListener { dialog.cancel() }
+
+    dialog.setView(customAlertDialogBinding.root)
     dialog.setCancelable(true)
     dialog.show()
 }

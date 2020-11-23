@@ -1,29 +1,29 @@
 package com.sertancanpolat.downloaderforinsta.view
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
-import com.sertancanpolat.downloaderforinsta.R
+import androidx.appcompat.app.AppCompatActivity
+import com.sertancanpolat.downloaderforinsta.databinding.ActivityMainBinding
 import com.sertancanpolat.downloaderforinsta.utilities.getShortCodeFromUrl
 import com.sertancanpolat.downloaderforinsta.utilities.snackBar
-import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        val binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
         val service = getSystemService(InputMethodManager::class.java)
 
-        ma_edTxtUserName.setOnEditorActionListener { t, i, _ ->
+        binding.maEdTxtUserName.setOnEditorActionListener { t, i, _ ->
             if (i == EditorInfo.IME_ACTION_SEARCH && t.text.length > 2) {
                 val intent: Intent
                 val shortCode = getShortCodeFromUrl(t.text.toString())
 
-                if(shortCode == " "){
+                if (shortCode == " ") {
                     intent = Intent(this, SearchResultActivity::class.java)
                     intent.putExtra("userName", t.text.toString())
                 } else {
