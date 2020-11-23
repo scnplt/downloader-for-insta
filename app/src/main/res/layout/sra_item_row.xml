@@ -29,7 +29,7 @@
             android:padding="8dp">
 
             <ImageView
-                android:id="@+id/sra_item_imgViewUser"
+                android:id="@+id/imgUser"
                 android:layout_width="120dp"
                 android:layout_height="120dp"
                 android:contentDescription="@string/sra_item_row_img_content_profile_pic"
@@ -47,12 +47,12 @@
                 android:gravity="center_vertical"
                 android:orientation="vertical"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/sra_item_linearLayout"
-                app:layout_constraintStart_toEndOf="@+id/sra_item_imgViewUser"
+                app:layout_constraintEnd_toStartOf="@+id/iconLayout"
+                app:layout_constraintStart_toEndOf="@+id/imgUser"
                 app:layout_constraintTop_toTopOf="parent">
 
                 <TextView
-                    android:id="@+id/sra_item_txtViewUserName"
+                    android:id="@+id/txtUserName"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:letterSpacing=".04"
@@ -64,7 +64,7 @@
                     tools:layout_editor_absoluteY="16dp" />
 
                 <TextView
-                    android:id="@+id/sra_item_txtViewName"
+                    android:id="@+id/txtName"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:singleLine="true"
@@ -76,7 +76,7 @@
             </LinearLayout>
 
             <LinearLayout
-                android:id="@+id/sra_item_linearLayout"
+                android:id="@+id/iconLayout"
                 android:layout_width="wrap_content"
                 android:layout_height="0dp"
                 android:gravity="center"
@@ -86,7 +86,7 @@
                 app:layout_constraintTop_toTopOf="parent">
 
                 <ImageView
-                    android:id="@+id/sra_item_imgViewVerified"
+                    android:id="@+id/imgVerified"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:contentDescription="@string/sra_item_row_img_content_verified"
@@ -97,7 +97,7 @@
                     app:srcCompat="@drawable/ic_verified" />
 
                 <ImageView
-                    android:id="@+id/sra_item_imgViewPrivate"
+                    android:id="@+id/imgPrivate"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"

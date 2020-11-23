@@ -15,8 +15,8 @@ fun downloadFile(context: Context, url: String, isVideo: Boolean) {
     val binding = CustomAlertDialogBinding.inflate(inflater)
     val path = "DFI_${System.currentTimeMillis()}." + if (isVideo) "mp4" else "jpeg"
 
-    binding.cadButtonNegative.setOnClickListener { dialog.cancel() }
-    binding.cadButtonPositive.setOnClickListener {
+    binding.btnNegative.setOnClickListener { dialog.cancel() }
+    binding.btnPositive.setOnClickListener {
         val request = DownloadManager.Request(Uri.parse(url)).apply {
             setAllowedNetworkTypes(DownloadManager.Request.NETWORK_WIFI or DownloadManager.Request.NETWORK_MOBILE)
             setTitle("Downloader For Insta")

@@ -50,38 +50,32 @@ class SearchResultActivity : AppCompatActivity() {
     private fun observeLiveData() {
         viewModel.processState.observe(this, { state ->
             when (state) {
-                ProcessState.IDLE -> {
-                    binding.sraRvSearchUser.visibility = View.GONE
-                    binding.sraTxtViewError.visibility = View.GONE
-                    binding.sraTxtViewUserNotFound.visibility = View.GONE
-                    progressDialog.cancel()
-                }
-                ProcessState.LOADING -> {
-                    progressDialog.show()
-                    binding.sraRvSearchUser.visibility = View.GONE
-                    binding.sraTxtViewError.visibility = View.GONE
-                    binding.sraTxtViewUserNotFound.visibility = View.GONE
-                }
+                ProcessState.IDLE -> showThisViews()
+                ProcessState.LOADING -> progressDialog.show()
                 ProcessState.ERROR -> {
-                    binding.sraTxtViewUserNotFound.visibility = View.GONE
-                    binding.sraRvSearchUser.visibility = View.GONE
-                    binding.sraTxtViewError.visibility = View.VISIBLE
+                    showThisViews(binding.txtError)
                     progressDialog.cancel()
                 }
                 ProcessState.LOADED -> {
                     if(viewModel.searchResult.value?.users?.size == 0){
-                        binding.sraTxtViewUserNotFound.visibility = View.VISIBLE
+                        binding.txtUserNotFound.visibility = View.VISIBLE
                     }else {
-                        binding.sraTxtViewError.visibility = View.GONE
-                        binding.sraTxtViewUserNotFound.visibility = View.GONE
-                        binding.sraRvSearchUser.adapter = adapter.apply { searchedUserModel = viewModel.searchResult.value!! }
-                        binding.sraRvSearchUser.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
-                        binding.sraRvSearchUser.visibility = View.VISIBLE
+                        binding.rcSearchResult.adapter = adapter.apply { searchedUserModel = viewModel.searchResult.value!! }
+                        binding.rcSearchResult.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
+                        binding.rcSearchResult.visibility = View.VISIBLE
                     }
                     progressDialog.cancel()
                 }
                 else -> {}
             }
         })
+    }
+
+    private fun showThisViews(vararg views: View){
+        binding.txtUserNotFound.visibility = View.GONE
+        binding.txtError.visibility = View.GONE
+        binding.rcSearchResult.visibility = View.GONE
+
+        views.forEach { it.visibility = View.VISIBLE }
     }
 }

@@ -51,8 +51,8 @@ class PostDetailsAdapter @Inject constructor(var postModel: PostModel) :
                 height = (postModel.graphql?.shortcodeMedia?.dimensions?.height!! * ratio).toInt()
             }
 
-            view.pdaItemPostImage.layoutParams.height = height
-            view.pdaItemPostImage.layoutParams.width = width
+            view.imgItem.layoutParams.height = height
+            view.imgItem.layoutParams.width = width
             view.listener = this@PostDetailsAdapter
             view.edge = edge
             view.url = url

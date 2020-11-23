@@ -7,7 +7,7 @@
     tools:context=".activities.SearchResultActivity">
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/sra_rvSearchUser"
+        android:id="@+id/rcSearchResult"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="top"
@@ -15,7 +15,7 @@
         android:visibility="visible" />
 
     <TextView
-        android:id="@+id/sra_txtViewError"
+        android:id="@+id/txtError"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
@@ -26,7 +26,7 @@
         android:visibility="gone" />
 
     <TextView
-        android:id="@+id/sra_txtViewUserNotFound"
+        android:id="@+id/txtUserNotFound"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"

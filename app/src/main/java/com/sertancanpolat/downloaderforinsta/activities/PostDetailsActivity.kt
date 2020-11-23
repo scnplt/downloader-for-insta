@@ -56,28 +56,28 @@ class PostDetailsActivity : AppCompatActivity() {
     private fun observeLiveData() {
         viewModel.processState.observe(this, { state ->
             when (state) {
-                ProcessState.IDLE -> {
-                    binding.pdaRvPostDetails.visibility = View.GONE
-                    binding.pdaTxtViewError.visibility = View.GONE
-                    progressDialog.cancel()
-                }
+                ProcessState.IDLE -> showThisViews()
                 ProcessState.LOADING -> progressDialog.show()
                 ProcessState.ERROR -> {
-                    binding.pdaRvPostDetails.visibility = View.GONE
-                    binding.pdaTxtViewError.visibility = View.VISIBLE
+                    showThisViews(binding.txtError)
                     progressDialog.cancel()
                 }
                 ProcessState.LOADED -> {
-                    binding.pdaTxtViewError.visibility = View.GONE
-                    binding.pdaRvPostDetails.adapter = adapter.apply { postModel = viewModel.postModel.value!! }
-                    binding.pdaRvPostDetails.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
-                    binding.pdaRvPostDetails.visibility = View.VISIBLE
+                    binding.rvPostDetails.adapter = adapter.apply { postModel = viewModel.postModel.value!! }
+                    binding.rvPostDetails.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
+                    showThisViews(binding.rvPostDetails)
                     progressDialog.cancel()
                 }
-                else -> {
-                }
+                else -> showThisViews()
             }
         })
+    }
+
+    private fun showThisViews(vararg views: View){
+        binding.rvPostDetails.visibility = View.GONE
+        binding.txtError.visibility = View.GONE
+
+        views.forEach { it.visibility = View.VISIBLE}
     }
 
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {

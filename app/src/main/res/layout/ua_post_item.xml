@@ -24,7 +24,7 @@
         android:background="@color/colorPrimaryMid">
 
         <ImageButton
-            android:id="@+id/ua_item_imgViewPost"
+            android:id="@+id/imgPost"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"

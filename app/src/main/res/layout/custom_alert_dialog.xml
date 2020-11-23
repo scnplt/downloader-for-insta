@@ -14,7 +14,7 @@
         android:padding="8dp">
 
         <TextView
-            android:id="@+id/cad_title"
+            android:id="@+id/txtTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
@@ -24,10 +24,10 @@
             android:textSize="34sp" />
 
         <TextView
-            android:id="@+id/cad_content"
+            android:id="@+id/txtContent"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/cad_title"
+            android:layout_below="@+id/txtTitle"
             android:layout_alignParentStart="true"
             android:layout_marginTop="8dp"
             android:text="@string/cad_content"
@@ -37,14 +37,14 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/cad_content"
+            android:layout_below="@id/txtContent"
             android:layout_alignParentStart="true"
             android:layout_marginTop="16dp"
             android:gravity="end"
             android:orientation="horizontal">
 
             <com.google.android.material.button.MaterialButton
-                android:id="@+id/cad_button_positive"
+                android:id="@+id/btnPositive"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:backgroundTint="@color/colorPrimaryMid"
@@ -56,7 +56,7 @@
                 app:rippleColor="@color/colorAccent" />
 
             <com.google.android.material.button.MaterialButton
-                android:id="@+id/cad_button_negative"
+                android:id="@+id/btnNegative"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"

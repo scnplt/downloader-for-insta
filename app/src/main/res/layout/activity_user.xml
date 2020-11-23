@@ -44,14 +44,14 @@
                         app:popupTheme="@style/Theme.MaterialComponents.Light" />
 
                     <androidx.constraintlayout.widget.ConstraintLayout
-                        android:id="@+id/ua_info_userInfoLayout"
+                        android:id="@+id/infoLayout"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:fitsSystemWindows="true"
                         android:paddingBottom="?actionBarSize">
 
                         <ImageView
-                            android:id="@+id/ua_info_imgViewUser"
+                            android:id="@+id/imgUser"
                             android:layout_width="160dp"
                             android:layout_height="160dp"
                             android:layout_marginTop="16dp"
@@ -64,7 +64,7 @@
                             tools:srcCompat="@tools:sample/avatars" />
 
                         <TextView
-                            android:id="@+id/ua_info_txtViewName"
+                            android:id="@+id/txtName"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_margin="8dp"
@@ -75,7 +75,7 @@
                             android:textSize="30sp"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@+id/ua_info_imgViewUser" />
+                            app:layout_constraintTop_toBottomOf="@+id/imgUser" />
 
                         <TextView
                             android:id="@+id/textView3"
@@ -89,10 +89,10 @@
                             app:layout_constraintEnd_toStartOf="@+id/textView5"
                             app:layout_constraintHorizontal_bias="0.5"
                             app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@+id/ua_info_txtViewName" />
+                            app:layout_constraintTop_toBottomOf="@+id/txtName" />
 
                         <TextView
-                            android:id="@+id/ua_info_txtViewFollowers"
+                            android:id="@+id/txtFollowers"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="8dp"
@@ -118,7 +118,7 @@
                             app:layout_constraintTop_toTopOf="@+id/textView3" />
 
                         <TextView
-                            android:id="@+id/ua_info_txtViewFollowing"
+                            android:id="@+id/txtFollowing"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@{Integer.toString(userModel.edgeFollow.count)}"
@@ -140,10 +140,10 @@
                             android:textSize="24sp"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@+id/ua_info_txtViewFollowers" />
+                            app:layout_constraintTop_toBottomOf="@+id/txtFollowers" />
 
                         <TextView
-                            android:id="@+id/ua_info_txtViewPost"
+                            android:id="@+id/txtPosts"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="8dp"
@@ -162,13 +162,13 @@
             </com.google.android.material.appbar.AppBarLayout>
 
             <RelativeLayout
-                android:id="@+id/ua_dataLayout"
+                android:id="@+id/dataLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
                 <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/ua_rvPosts"
+                    android:id="@+id/rvPosts"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_alignParentStart="true"
@@ -180,7 +180,7 @@
                     android:visibility="gone" />
 
                 <TextView
-                    android:id="@+id/ua_txtViewPrivate"
+                    android:id="@+id/txtPrivate"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_centerInParent="true"
@@ -197,7 +197,7 @@
         </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
         <TextView
-            android:id="@+id/ua_txtViewError"
+            android:id="@+id/txtError"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"

@@ -25,7 +25,7 @@
         android:background="@color/colorPrimaryMid">
 
         <ImageView
-            android:id="@+id/pda_item_postImage"
+            android:id="@+id/imgItem"
             android:layout_width="match_parent"
             android:layout_height="200dp"
             android:layout_alignParentStart="true"
@@ -39,12 +39,12 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/pda_item_postImage"
+            android:layout_below="@+id/imgItem"
             android:gravity="center"
             android:orientation="horizontal">
 
             <com.google.android.material.button.MaterialButton
-                android:id="@+id/pda_item_downloadPostImage"
+                android:id="@+id/btnDownload"
                 android:layout_width="0dp"
                 android:layout_height="70dp"
                 android:layout_weight="5"
@@ -59,7 +59,7 @@
                 app:cornerRadius="0dp" />
 
             <ImageButton
-                android:id="@+id/pda_item_share_buttonImage"
+                android:id="@+id/btnShare"
                 android:layout_width="0dp"
                 android:layout_height="70dp"
                 android:layout_marginStart="1dp"

@@ -18,7 +18,7 @@ class MainActivity : AppCompatActivity() {
 
         val service = getSystemService(InputMethodManager::class.java)
 
-        binding.maEdTxtUserName.setOnEditorActionListener { t, i, _ ->
+        binding.edtTxtInput.setOnEditorActionListener { t, i, _ ->
             if (i == EditorInfo.IME_ACTION_SEARCH && t.text.length > 2) {
                 val intent: Intent
                 val shortCode = getShortCodeFromUrl(t.text.toString())

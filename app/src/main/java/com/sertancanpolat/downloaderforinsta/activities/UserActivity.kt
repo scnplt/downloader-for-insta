@@ -1,12 +1,12 @@
 package com.sertancanpolat.downloaderforinsta.activities
 
 import android.app.Dialog
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import androidx.activity.viewModels
+import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.GridLayoutManager
 import com.sertancanpolat.downloaderforinsta.R
@@ -29,20 +29,18 @@ class UserActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         binding = DataBindingUtil.setContentView(this, R.layout.activity_user)
-        userName = intent.getStringExtra("userName")!!
 
+        userName = intent.getStringExtra("userName")!!
+        binding.toolbar.title = "@$userName"
         observeLiveData()
         viewModel.getUser(userName)
 
-        binding.toolbar.title = "@$userName"
         setSupportActionBar(binding.toolbar)
         supportActionBar!!.setDisplayHomeAsUpEnabled(true)
 
         progressDialog = this.progressDialog()
-
-        binding.uaRvPosts.setOnScrollChangeListener(recyclerViewListener)
+        binding.rvPosts.setOnScrollChangeListener(recyclerViewListener)
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -65,34 +63,33 @@ class UserActivity : AppCompatActivity() {
     private fun observeLiveData() {
         viewModel.userState.observe(this, { state ->
             when (state) {
-                ProcessState.IDLE -> {
-                    binding.uaInfoUserInfoLayout.visibility = View.GONE
-                    binding.uaDataLayout.visibility = View.GONE
-                    progressDialog.cancel()
-                }
+                ProcessState.IDLE -> showThisViews()
                 ProcessState.LOADING -> {
-                    binding.uaInfoUserInfoLayout.visibility = View.GONE
-                    binding.uaDataLayout.visibility = View.GONE
+                    showThisViews()
                     progressDialog.show()
                 }
                 ProcessState.ERROR -> {
-                    binding.uaTxtViewError.visibility = View.VISIBLE
-                    binding.uaDataLayout.visibility = View.GONE
-                    binding.uaInfoUserInfoLayout.visibility = View.GONE
+                    showThisViews(binding.txtError)
                     progressDialog.cancel()
                 }
                 ProcessState.LOADED -> {
-                    binding.uaTxtViewError.visibility = View.GONE
-                    binding.uaInfoUserInfoLayout.visibility = View.VISIBLE
-                    binding.uaDataLayout.visibility = View.VISIBLE
-                    bindData()
-                    if (viewModel.userModel.value?.graphql?.user?.isPrivate!!) {
-                        binding.uaRvPosts.visibility = View.GONE
-                        binding.uaTxtViewPrivate.visibility = View.VISIBLE
+                    binding.txtError.visibility = View.GONE
+                    binding.infoLayout.visibility = View.VISIBLE
+                    binding.dataLayout.visibility = View.VISIBLE
+
+                    val user = viewModel.userModel.value?.graphql?.user!!
+                    binding.userModel = user
+
+                    if (!user.isPrivate) {
+                        binding.txtPrivate.visibility = View.GONE
+                        binding.rvPosts.visibility = View.VISIBLE
+                        binding.rvPosts.adapter = adapter.apply { userModel = user }
+                        binding.rvPosts.layoutManager = GridLayoutManager(this, 3, GridLayoutManager.VERTICAL, false)
                     } else {
-                        binding.uaTxtViewPrivate.visibility = View.GONE
-                        binding.uaRvPosts.visibility = View.VISIBLE
+                        binding.rvPosts.visibility = View.GONE
+                        binding.txtPrivate.visibility = View.VISIBLE
                     }
+
                     progressDialog.cancel()
                 }
                 else -> { }
@@ -103,9 +100,7 @@ class UserActivity : AppCompatActivity() {
             when (state) {
                 ProcessState.LOADING -> progressDialog.show()
                 ProcessState.ERROR -> {
-                    binding.uaInfoUserInfoLayout.visibility = View.GONE
-                    binding.uaDataLayout.visibility = View.GONE
-                    binding.uaTxtViewError.visibility = View.VISIBLE
+                    showThisViews(binding.txtError)
                     progressDialog.cancel()
                 }
                 ProcessState.LOADED -> {
@@ -113,7 +108,7 @@ class UserActivity : AppCompatActivity() {
                         viewModel.lastMediaIndex.value!!,
                         viewModel.incomingMediaSize.value!!
                     )
-                    viewModel.lastMediaIndex.value = viewModel.userModel.value?.graphql?.user?.edgeOwnerToTimelineMedia?.edges?.size
+                    viewModel.lastMediaIndex.value = viewModel.userModel.value?.graphql?.user?.edgeOwnerToTimelineMedia?.edges?.size!! - 1
                     progressDialog.cancel()
                 }
                 else -> {
@@ -122,19 +117,16 @@ class UserActivity : AppCompatActivity() {
         })
     }
 
-    private fun bindData() {
-        val user = viewModel.userModel.value?.graphql?.user!!
+    private fun showThisViews(vararg views: View){
+        binding.infoLayout.visibility = View.GONE
+        binding.dataLayout.visibility = View.GONE
+        binding.txtError.visibility = View.GONE
 
-        if (!user.isPrivate) {
-            binding.uaRvPosts.adapter = adapter.apply { userModel = user }
-            binding.uaRvPosts.layoutManager = GridLayoutManager(this, 3, GridLayoutManager.VERTICAL, false)
-        }
-
-        binding.userModel = user
+        views.forEach { it.visibility = View.VISIBLE }
     }
 
     private val recyclerViewListener = { _: View, _: Int, _: Int, _: Int, _: Int ->
-        if (binding.uaRvPosts.computeVerticalScrollOffset() > binding.uaRvPosts.computeVerticalScrollRange() - 4000
+        if (binding.rvPosts.computeVerticalScrollOffset() > binding.rvPosts.computeVerticalScrollRange() - 4000
             && viewModel.morePostState.value != ProcessState.LOADING
             && viewModel.userModel.value?.graphql?.user?.edgeOwnerToTimelineMedia?.pageInfo?.hasNextPage!!
         ) {
