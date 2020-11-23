@@ -6,7 +6,7 @@
 
         <variable
             name="edge"
-            type="com.sertancanpolat.downloaderforinsta.model.helper_class.Edge" />
+            type="com.sertancanpolat.downloaderforinsta.models.Edge" />
 
         <variable
             name="url"
@@ -14,7 +14,7 @@
 
         <variable
             name="listener"
-            type="com.sertancanpolat.downloaderforinsta.data_binding_listeners.PDAItemListener" />
+            type="com.sertancanpolat.downloaderforinsta.interfaces.PDAItemListener" />
 
     </data>
 

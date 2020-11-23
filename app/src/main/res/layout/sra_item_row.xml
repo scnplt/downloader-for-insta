@@ -7,11 +7,11 @@
 
         <variable
             name="userModel"
-            type="com.sertancanpolat.downloaderforinsta.model.SearchedUserModel.UserWithPosition.User" />
+            type="com.sertancanpolat.downloaderforinsta.models.SearchedUserModel.UserWithPosition.User" />
 
         <variable
             name="listener"
-            type="com.sertancanpolat.downloaderforinsta.data_binding_listeners.SRAItemListener" />
+            type="com.sertancanpolat.downloaderforinsta.interfaces.SRAItemListener" />
     </data>
 
     <androidx.cardview.widget.CardView
