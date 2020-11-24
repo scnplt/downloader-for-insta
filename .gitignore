@@ -21,7 +21,6 @@
 bin/
 gen/
 out/
-release/
 .gradle/
 build/
 local.properties
