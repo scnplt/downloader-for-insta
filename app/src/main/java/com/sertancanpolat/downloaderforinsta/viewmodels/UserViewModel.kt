@@ -65,6 +65,7 @@ class UserViewModel @ViewModelInject constructor(private val instagramApiService
                         incomingMediaSize.value = t.data?.user?.edgeOwnerToTimelineMedia?.edges?.size ?: 0
                         userModel.value?.graphql?.user?.edgeOwnerToTimelineMedia?.pageInfo = t.data?.user?.edgeOwnerToTimelineMedia?.pageInfo
                         userModel.value?.graphql?.user?.edgeOwnerToTimelineMedia?.edges?.addAll(t.data?.user?.edgeOwnerToTimelineMedia?.edges!!)
+                        lastMediaIndex.value = userModel.value?.graphql?.user?.edgeOwnerToTimelineMedia?.edges?.size!! - 1
                         morePostState.value = ProcessState.LOADED
                     }
 

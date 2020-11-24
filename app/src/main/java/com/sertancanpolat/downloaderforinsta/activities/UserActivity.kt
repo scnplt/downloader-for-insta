@@ -2,13 +2,14 @@ package com.sertancanpolat.downloaderforinsta.activities
 
 import android.app.Dialog
 import android.os.Bundle
-import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.GridLayoutManager
+import com.google.android.material.appbar.AppBarLayout
+import com.google.android.material.appbar.AppBarLayout.LayoutParams.SCROLL_FLAG_NO_SCROLL
 import com.sertancanpolat.downloaderforinsta.R
 import com.sertancanpolat.downloaderforinsta.adapters.UserPostsAdapter
 import com.sertancanpolat.downloaderforinsta.databinding.ActivityUserBinding
@@ -41,15 +42,13 @@ class UserActivity : AppCompatActivity() {
 
         progressDialog = this.progressDialog()
         binding.rvPosts.setOnScrollChangeListener(recyclerViewListener)
-    }
-
-    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        binding.toolbar.inflateMenu(R.menu.ua_menu)
-        return super.onCreateOptionsMenu(menu)
+        binding.swipeRefresh.setOnRefreshListener {
+            viewModel.getUser(userName)
+            binding.swipeRefresh.isRefreshing = false
+        }
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        if(item.itemId == R.id.refreshData) startActivity(intent)
         finish()
         return true
     }
@@ -62,7 +61,7 @@ class UserActivity : AppCompatActivity() {
 
     private fun observeLiveData() {
         viewModel.userState.observe(this, { state ->
-            when (state) {
+            when (state!!) {
                 ProcessState.IDLE -> showThisViews()
                 ProcessState.LOADING -> {
                     showThisViews()
@@ -90,9 +89,11 @@ class UserActivity : AppCompatActivity() {
                         binding.txtPrivate.visibility = View.VISIBLE
                     }
 
+                    if (user.edgeOwnerToTimelineMedia?.edges?.size == 0)
+                        (binding.collapsingToolbar.layoutParams as AppBarLayout.LayoutParams).scrollFlags = SCROLL_FLAG_NO_SCROLL
+
                     progressDialog.cancel()
                 }
-                else -> { }
             }
         })
 
@@ -105,14 +106,12 @@ class UserActivity : AppCompatActivity() {
                 }
                 ProcessState.LOADED -> {
                     adapter.notifyItemRangeInserted(
-                        viewModel.lastMediaIndex.value!!,
+                        viewModel.lastMediaIndex.value!! + 1,
                         viewModel.incomingMediaSize.value!!
                     )
-                    viewModel.lastMediaIndex.value = viewModel.userModel.value?.graphql?.user?.edgeOwnerToTimelineMedia?.edges?.size!! - 1
                     progressDialog.cancel()
                 }
-                else -> {
-                }
+                else -> { }
             }
         })
     }

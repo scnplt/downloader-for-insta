@@ -49,7 +49,7 @@ class SearchResultActivity : AppCompatActivity() {
 
     private fun observeLiveData() {
         viewModel.processState.observe(this, { state ->
-            when (state) {
+            when (state!!) {
                 ProcessState.IDLE -> showThisViews()
                 ProcessState.LOADING -> progressDialog.show()
                 ProcessState.ERROR -> {
@@ -66,7 +66,6 @@ class SearchResultActivity : AppCompatActivity() {
                     }
                     progressDialog.cancel()
                 }
-                else -> {}
             }
         })
     }

@@ -55,7 +55,7 @@ class PostDetailsActivity : AppCompatActivity() {
 
     private fun observeLiveData() {
         viewModel.processState.observe(this, { state ->
-            when (state) {
+            when (state!!) {
                 ProcessState.IDLE -> showThisViews()
                 ProcessState.LOADING -> progressDialog.show()
                 ProcessState.ERROR -> {
@@ -68,7 +68,6 @@ class PostDetailsActivity : AppCompatActivity() {
                     showThisViews(binding.rvPostDetails)
                     progressDialog.cancel()
                 }
-                else -> showThisViews()
             }
         })
     }
