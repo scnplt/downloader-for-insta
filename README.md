@@ -1,5 +1,5 @@
 # Downloader For Insta
-[![APK](https://img.shields.io/badge/download-apk-brightgreen)](https://github.com/scnplt/downloader-for-insta/blob/master/app/release/dfi.apk?raw=true)
+[![APK](https://img.shields.io/badge/download-apk-brightgreen)](https://play.google.com/store/apps/details?id=com.sertancanpolat.downloaderforinsta)
 [![Release](https://img.shields.io/github/v/release/scnplt/downloader-for-insta?style=flat-square)](https://github.com/scnplt/downloader-for-insta/releases/)
 [![Platform](https://img.shields.io/badge/platform-android-succes)](https://github.com/scnplt/downloader-for-insta/blob/master/app/build.gradle)
 [![License](https://img.shields.io/hexpm/l/plug?style=flat-square)](https://github.com/scnplt/downloader-for-insta/blob/master/LICENSE)
