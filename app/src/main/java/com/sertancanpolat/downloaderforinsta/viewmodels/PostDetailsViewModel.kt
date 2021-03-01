@@ -1,17 +1,19 @@
 package com.sertancanpolat.downloaderforinsta.viewmodels
 
-import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.sertancanpolat.downloaderforinsta.models.PostModel
 import com.sertancanpolat.downloaderforinsta.services.InstagramApiService
 import com.sertancanpolat.downloaderforinsta.utils.ProcessState
+import dagger.hilt.android.lifecycle.HiltViewModel
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.observers.DisposableSingleObserver
 import io.reactivex.schedulers.Schedulers
+import javax.inject.Inject
 
-class PostDetailsViewModel @ViewModelInject constructor(private val instagramApiService: InstagramApiService) :
+@HiltViewModel
+class PostDetailsViewModel @Inject constructor(private val instagramApiService: InstagramApiService) :
     ViewModel() {
 
     val postModel = MutableLiveData<PostModel>()
